@@ -11,14 +11,23 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('facilities', function (Blueprint $table) {
-            $table->id('facility_id'); 
-            $table->string('name');
+        
+        Schema::create('reservations', function (Blueprint $table) {
+            $table->id('reservation_id'); // Matches PK in ERD
             
             
+            $table->foreignId('user_id')->constrained('users', 'user_id');
             $table->foreignId('room_id')->constrained('rooms', 'room_id');
             
+            
+            $table->dateTime('start_time');
+            $table->dateTime('end_time');
+            $table->text('purpose');
             $table->string('status');
+            
+           
+            $table->foreignId('approve_by')->nullable()->constrained('admin', 'admin_id');
+            
             $table->timestamps();
         });
     }
@@ -28,6 +37,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('facilities');
+        Schema::dropIfExists('reservations');
     }
 };
