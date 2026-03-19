@@ -21,6 +21,8 @@
         <div class="content-area">
             @yield('content')
         </div>
+         {{-- Footer --}}
+    @include('partial._footer')
     </main>
 </div>
 
