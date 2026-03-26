@@ -1,0 +1,115 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+
+:root {
+    --primary-blue: #4DA8FF;
+    --sidebar-width: 280px;
+    --bg-gray: #f7f9fc;
+}
+
+
+.sidebar {
+    width: var(--sidebar-width);
+    background-color: var(--primary-blue);
+    color: white;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
+}
+
+.sidebar-header {
+    padding: 30px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo-circle {
+    width: 45px; height: 45px; background: white; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--primary-blue); font-weight: 800; font-size: 1.2rem;
+}
+
+.brand-text { font-size: 1.4rem; font-weight: 700; letter-spacing: 0.5px; color: white; }
+
+.side-nav { flex: 1; padding: 10px 20px; }
+
+.nav-link-custom {
+    display: flex; align-items: center; gap: 15px;
+    color: rgba(255,255,255,0.85);
+    text-decoration: none; padding: 14px 20px;
+    border-radius: 12px; margin-bottom: 8px;
+    transition: 0.3s;
+}
+
+.nav-link-custom i { width: 20px; font-size: 1.1rem; }
+.nav-link-custom:hover, .nav-link-custom.active {
+    background: rgba(255,255,255,0.2);
+    color: white; font-weight: 600;
+}
+
+.sidebar-footer { padding: 30px; }
+
+.logout-btn {
+    width: 100%; background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.4);
+    color: white; padding: 12px; border-radius: 10px;
+    font-weight: 600; cursor: pointer; transition: 0.3s;
+}
+
+
+.main-wrapper {
+    margin-left: var(--sidebar-width);
+    flex: 1;
+    min-height: 100vh;
+}
+
+.top-bar {
+    background: white; padding: 15px 40px;
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 1px solid #eef2f6;
+}
+
+.header-user { display: flex; align-items: center; gap: 15px; }
+.user-meta { text-align: right; line-height: 1.2; }
+.user-name { display: block; font-weight: 700; font-size: 0.9rem; color: #333; }
+
+.avatar-circle {
+    width: 40px; height: 40px; background: #eee; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: bold; font-size: 0.8rem; color: #555;
+}
+
+
+.panel-blue {
+    background-color: var(--primary-blue);
+    color: white; border-radius: 25px; padding: 35px;
+    margin-bottom: 30px;
+}
+
+.action-card {
+    background: white; color: #333; border-radius: 20px;
+    padding: 35px 20px; text-align: center; border: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: 0.3s; height: 100%;
+    text-decoration: none; display: block;
+}
+
+.action-card:hover { transform: translateY(-5px); color: inherit; }
+.action-card i { font-size: 2.2rem; color: #444; margin-bottom: 15px; display: block; }
+.action-card h4 { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; }
+.action-card p { font-size: 0.85rem; color: #777; margin-bottom: 0; }
