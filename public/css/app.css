@@ -1,0 +1,171 @@
+.welcome-banner {
+    background: #3b82f6;
+    border-radius: 12px;
+    padding: 24px 28px;
+    color: #fff;
+    margin-bottom: 20px;
+}
+ 
+.welcome-banner h1 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+ 
+.welcome-banner p {
+    font-size: 0.85rem;
+    opacity: 0.88;
+}
+ 
+.reservations-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+ 
+.res-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 20px 24px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.2s;
+}
+ 
+.res-card:hover {
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+ 
+.res-card-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+ 
+.res-card-left {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+ 
+.res-card-title-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+ 
+.res-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1e293b;
+}
+ 
+.badge {
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+}
+ 
+.badge.approved {
+    background: #dcfce7;
+    color: #15803d;
+}
+ 
+.badge.pending {
+    background: #fef9c3;
+    color: #a16207;
+}
+ 
+.badge.cancelled {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+ 
+.res-info-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+ 
+.res-info-grid span {
+    font-size: 0.8rem;
+    color: #64748b;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+ 
+.res-info-grid span i {
+    color: #3b82f6;
+    font-size: 0.75rem;
+    width: 14px;
+}
+ 
+.res-card-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 14px;
+    min-width: 160px;
+}
+ 
+.res-time {
+    font-size: 0.82rem;
+    color: #64748b;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+ 
+.res-time i {
+    color: #3b82f6;
+}
+ 
+.res-actions {
+    display: flex;
+    gap: 8px;
+}
+ 
+.btn-view,
+.btn-cancel {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 13px;
+    border-radius: 6px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    font-family: inherit;
+    transition: all 0.15s;
+}
+ 
+.btn-view {
+    background: #eff6ff;
+    color: #2563eb;
+    border: 1px solid #bfdbfe;
+}
+ 
+.btn-view:hover {
+    background: #3b82f6;
+    color: #fff;
+    border-color: #3b82f6;
+}
+ 
+.btn-cancel {
+    background: #fee2e2;
+    color: #ef4444;
+    border: 1px solid #fecaca;
+}
+ 
+.btn-cancel:hover {
+    background: #ef4444;
+    color: #fff;
+    border-color: #ef4444;
+}
