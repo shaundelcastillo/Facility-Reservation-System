@@ -9,5 +9,5 @@ Route::get('/', function () {
 
 // This is for Facilities Dashboard
 Route::get('/facilities', function () {
-    return view('layout.facilities'); 
+    return view('layout.facilities');
 });
