@@ -1,7 +1,4 @@
-@extends('layout.reservation_app')
-
-@section('content')
-    <section class="welcome-banner">
+<section class="welcome-banner">
         <h1>My Reservations</h1>
         <p>View and manage all your facility reservations</p>
     </section>
@@ -122,7 +119,4 @@
                 </div>
             </div>
         </div>
-
-    </div>
-
-@endsection
+        
