@@ -1,5 +1,5 @@
      <main class="main">
-            <div class="calendar-card">
+            <div class="res-calendar-card">
 
                 <!-- Card header -->
                 <div class="cal-header">
