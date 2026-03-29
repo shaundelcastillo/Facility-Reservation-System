@@ -145,174 +145,169 @@ input, textarea { width: 100%; padding: 12px; border-radius: 10px; border: 1px s
 
 /* --- Footer --- */
 .footer { background: white; text-align: center; padding: 15px; font-size: 0.85rem; color: #777; border-top: 1px solid #eef2f6; }
-.welcome-banner {
-    background: #3b82f6;
-    border-radius: 12px;
-    padding: 24px 28px;
-    color: #fff;
-    margin-bottom: 20px;
+
+/* =============================================================
+   SECTION: MY RESERVATIONS (Kriszyle's Module)
+   ============================================================= */
+
+/*  Wrapper to prevent style leaks */
+.reservation-page {
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text-dark);
 }
- 
-.welcome-banner h1 {
-    font-size: 1.3rem;
-    font-weight: 700;
-    margin-bottom: 4px;
+
+/*  Navigation Tabs - Using Leader's Variables */
+.reservation-page .nav-tabs {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 25px;
+    border-bottom: 1px solid #eef2f6;
+    padding-bottom: 10px;
 }
- 
-.welcome-banner p {
+
+.reservation-page .nav-tab {
+    padding: 10px 22px;
+    border-radius: 25px;
     font-size: 0.85rem;
-    opacity: 0.88;
-}
- 
-.reservations-list {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-}
- 
-.res-card {
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 12px;
-    padding: 20px 24px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-    transition: box-shadow 0.2s;
-}
- 
-.res-card:hover {
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
-}
- 
-.res-card-inner {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 16px;
-    flex-wrap: wrap;
-}
- 
-.res-card-left {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
- 
-.res-card-title-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
- 
-.res-title {
-    font-size: 1rem;
-    font-weight: 700;
-    color: #1e293b;
-}
- 
-.badge {
-    font-size: 0.7rem;
     font-weight: 600;
-    padding: 3px 10px;
-    border-radius: 20px;
+    color: #666;
+    cursor: pointer;
+    transition: 0.3s;
+    border: none;
+    background: #e0e6ed;
+    text-decoration: none;
 }
- 
-.badge.approved {
-    background: #dcfce7;
-    color: #15803d;
+
+.reservation-page .nav-tab.active {
+    background: var(--primary-blue);
+    color: white;
 }
- 
-.badge.pending {
-    background: #fef9c3;
-    color: #a16207;
+
+.reservation-page .nav-tab:hover:not(.active) {
+    background: #d1d9e2;
 }
- 
-.badge.cancelled {
-    background: #fee2e2;
-    color: #b91c1c;
-}
- 
-.res-info-grid {
+
+/*  Reservation Cards */
+.reservation-page .card {
+    background: var(--white);
+    border-radius: 15px;
+    padding: 20px 25px;
     display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
- 
-.res-info-grid span {
-    font-size: 0.8rem;
-    color: #64748b;
-    display: flex;
-    align-items: center;
-    gap: 7px;
-}
- 
-.res-info-grid span i {
-    color: #3b82f6;
-    font-size: 0.75rem;
-    width: 14px;
-}
- 
-.res-card-right {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
     justify-content: space-between;
-    gap: 14px;
-    min-width: 160px;
-}
- 
-.res-time {
-    font-size: 0.82rem;
-    color: #64748b;
-    display: flex;
     align-items: center;
-    gap: 6px;
+    border: 1px solid #eef2f6;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    transition: 0.3s ease;
 }
- 
-.res-time i {
-    color: #3b82f6;
+
+.reservation-page .card:hover {
+    transform: translateX(8px);
+    border-color: var(--primary-blue);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.08);
 }
- 
-.res-actions {
+
+.reservation-page .card-info {
     display: flex;
-    gap: 8px;
+    flex-direction: column;
+    gap: 4px;
 }
- 
-.btn-view,
-.btn-cancel {
-    display: inline-flex;
+
+.reservation-page .card-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-dark);
+}
+
+.reservation-page .card-meta {
+    display: flex;
+    gap: 20px;
+    font-size: 0.85rem;
+    color: #888;
+}
+
+/*  Status Badges */
+.reservation-page .badge {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.reservation-page .badge-approved { background: #e8f5e9; color: #2e7d32; }
+.reservation-page .badge-pending { background: #fffde7; color: #f9a825; }
+.reservation-page .badge-cancelled { background: #ffebee; color: #c62828; }
+
+/*  Custom Modals for this Page */
+.reservation-page .overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(4px);
+    display: none;
+    justify-content: center;
     align-items: center;
-    gap: 5px;
-    padding: 6px 13px;
-    border-radius: 6px;
-    font-size: 0.78rem;
+    z-index: 2000;
+}
+
+.reservation-page .overlay.active { display: flex; }
+
+.reservation-page .modal-box {
+    background: white;
+    width: 480px;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/*  Detail Rows (View Details) */
+.reservation-page .detail-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 18px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #f8f9fa;
+}
+
+.reservation-page .detail-label {
+    font-size: 0.7rem;
+    color: #888;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.reservation-page .detail-value {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+/*  Buttons */
+.reservation-page .btn-group { display: flex; gap: 10px; }
+
+.reservation-page .btn-action {
+    padding: 8px 16px;
+    border-radius: 10px;
+    font-size: 0.8rem;
     font-weight: 600;
     cursor: pointer;
     border: none;
-    font-family: inherit;
-    transition: all 0.15s;
+    transition: 0.2s;
 }
- 
-.btn-view {
-    background: #eff6ff;
-    color: #2563eb;
-    border: 1px solid #bfdbfe;
-}
- 
-.btn-view:hover {
-    background: #3b82f6;
-    color: #fff;
-    border-color: #3b82f6;
-}
- 
-.btn-cancel {
-    background: #fee2e2;
-    color: #ef4444;
-    border: 1px solid #fecaca;
-}
- 
-.btn-cancel:hover {
-    background: #ef4444;
-    color: #fff;
-    border-color: #ef4444;
-}
+
+.reservation-page .btn-view { background: #f0f4f8; color: #444; }
+.reservation-page .btn-view:hover { background: #e2e8f0; }
+
+.reservation-page .btn-cancel { background: #fee2e2; color: #dc2626; }
+.reservation-page .btn-cancel:hover { background: #fecaca; }
+
+/* =============================================================
+   END OF KRISZYLE'S SECTION
+   ============================================================= */
