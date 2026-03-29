@@ -145,3 +145,98 @@ input, textarea { width: 100%; padding: 12px; border-radius: 10px; border: 1px s
 
 /* --- Footer --- */
 .footer { background: white; text-align: center; padding: 15px; font-size: 0.85rem; color: #777; border-top: 1px solid #eef2f6; }
+
+/* ============================================
+   CALENDAR MODULE 
+   ============================================ */
+
+.res-calendar-card {
+    background: #7c6fe0;
+    border: 2px solid #c4b5fd;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 2px 16px rgba(109, 40, 217, 0.15);
+    margin-top: 20px;
+}
+
+.cal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.cal-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+}
+
+.month-label {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #fff;
+    text-align: center;
+    flex: 1;
+}
+
+/* Calendar Grid Logic */
+.cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+}
+
+.day-header {
+    text-align: center;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #e0d7ff;
+    padding: 8px 0;
+    text-transform: capitalize;
+}
+
+.day-cell {
+    min-height: 80px;
+    border-radius: 10px;
+    background: #a899e8;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    transition: background 0.15s, transform 0.1s;
+}
+
+.day-cell.today {
+    background: #6d28d9;
+    border: 2px solid #fff;
+}
+
+/* Modal / Popup Styles */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 1000; /* High z-index to stay above sidebar */
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-overlay.open { display: flex; }
+
+.modal-res-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    background: #f5f3ff;
+    border: 1px solid #ede9fe;
+    margin-bottom: 8px;
+}
