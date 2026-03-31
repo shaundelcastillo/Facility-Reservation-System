@@ -1,5 +1,5 @@
 @extends('layout.app')
 
 @section('content')
-    @include('partial._reservation')
+    @include('user.reservation')
 @endsection
