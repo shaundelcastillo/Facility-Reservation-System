@@ -5,7 +5,7 @@
     </div>
 
     <nav class="side-nav">
-        <a href="{{ url('/home') }}" class="nav-item">
+        <a href="{{ url('/dashboard') }}" class="nav-item">
             <i class="fas fa-home"></i> Home
         </a>
 
@@ -13,14 +13,20 @@
             <i class="fas fa-building"></i> Facilities
         </a>
 
-        <a href="#" class="nav-item"><i class="fas fa-clipboard-list"></i> My Reservation</a>
-        <a href="#" class="nav-item"><i class="fas fa-calendar-alt"></i> Calendar</a>
+        <a href="{{ url('/reservation') }}" class="nav-item {{ Request::is('reservation') ? 'active' : '' }}">
+            <i class="fas fa-clipboard-list"></i> My Reservation
+        </a>
+        <a href="{{ url('/calendar') }}" class="nav-item {{ Request::is('calendar') ? 'active' : '' }}">
+            <i class="fas fa-calendar-alt"></i> Calendar
+        </a>
     </nav>
 
     <div class="sidebar-footer">
         <form action="{{ route('logout') }}" method="POST">
-            @csrf
-            <button type="submit" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
-        </form>
+    @csrf
+    <button type="submit" class="logout-btn">
+        <i class="fas fa-sign-out-alt"></i> Logout
+    </button>
+</form>
     </div>
 </aside>
