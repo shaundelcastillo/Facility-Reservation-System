@@ -2,6 +2,16 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\ReservationController;
+
+// Add this route
+Route::post('/reservations/store', [ReservationController::class, 'store'])->name('reservations.store');
+
+Route::post('/logout', function () {
+    Auth::logout();
+    return redirect('/'); // Redirect to your welcome/login page
+})->name('logout');
+
 // 1. The Landing Page (Login/Signup)
 Route::get('/', function () {
     return view('welcome');

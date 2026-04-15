@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const modalTitle = document.getElementById('modalTitle');
         const closeModalBtn = document.getElementById('closeModal');
         const bookButtons = document.querySelectorAll('.book-btn');
-        const searchInput = document.getElementById('searchInput');
+        const searchInput = document.getElementById('searchInput');ac
         const filterButtons = document.querySelectorAll('.filter-btn');
         const facilityCards = document.querySelectorAll('.facility-card');
 

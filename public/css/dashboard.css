@@ -1,0 +1,56 @@
+/* --- Home Dashboard Components --- */
+.welcome-banner { 
+    background-color: var(--primary-blue); 
+    color: white; 
+    padding: 40px; 
+    border-radius: 20px; 
+    margin-bottom: 30px; 
+    position: relative; 
+}
+
+.stats-grid { 
+    display: grid; 
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 25px; 
+    margin-bottom: 30px; 
+}
+
+.stat-card { 
+    background: white; 
+    padding: 25px; 
+    border-radius: 15px; 
+    border: 1px solid #e0e6ed; 
+}
+
+.panel { 
+    background-color: var(--primary-blue); 
+    padding: 35px; 
+    border-radius: 25px; 
+    margin-bottom: 30px; 
+    color: white; 
+}
+
+.action-grid { 
+    display: grid; 
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 25px; 
+}
+
+.action-card { 
+    background: white; 
+    color: var(--text-dark); 
+    padding: 35px 20px; 
+    border-radius: 20px; 
+    text-align: center; 
+}
+
+.res-item { 
+    background: white; 
+    color: var(--text-dark); 
+    padding: 25px 30px; 
+    border-radius: 20px; 
+    margin-bottom: 15px; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+}

@@ -1,5 +1,10 @@
 @extends('layout.app')
 
+{{-- Add this block to link your CSS --}}
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
+@endpush
+
 @section('content')
     <section class="welcome-banner">
         <div class="notification-dot"></div>

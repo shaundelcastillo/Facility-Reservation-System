@@ -1,0 +1,105 @@
+/* Main Container with the Blue Background */
+.reservation-page .main {
+    background-color: #5fb1ff; 
+    padding: 30px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+/* Individual Card Styling */
+.reservation-page .card {
+    background: #ffffff;
+    border-radius: 25px; 
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Left Side: Title and Info */
+.card-content-left {
+    display: flex;
+    flex-direction: column;
+}
+
+.title-row {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.facility-title {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #333;
+}
+
+.info-details p {
+    margin: 4px 0;
+    font-size: 0.85rem;
+    color: #666;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Right Side: Time and Buttons */
+.card-content-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 15px;
+}
+
+.time-stamp {
+    font-weight: 600;
+    color: #444;
+    font-size: 0.9rem;
+}
+
+.action-group {
+    display: flex;
+    gap: 10px;
+}
+
+/* Button Styling */
+.btn-action {
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    background: white;
+    transition: 0.2s;
+}
+
+.btn-cancel:hover {
+    background: #fff5f5;
+    color: #e53e3e;
+    border-color: #feb2b2;
+}
+
+/* Status Badges */
+.badge-approved { 
+    background: #e8f5e9; 
+    color: #2e7d32; 
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: bold;
+}
+
+.badge-pending { 
+    background: #fffde7; 
+    color: #f9a825; 
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: bold;
+}
