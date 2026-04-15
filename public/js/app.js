@@ -51,139 +51,91 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-
     /* ============================================================
        SECTION 2: KRISZYLE'S CALENDAR LOGIC
        ============================================================ */
     const calGrid = document.getElementById('calGrid');
-
-    // Only run if the calendar grid exists (Calendar Page)
+    
+    
     if (calGrid) {
-        const reservations = {
-            '2026-01-18': [
-                { facility: 'Computer Lab 1', facilityKey: 'lab1', time: '9:00 AM – 11:00 AM', purpose: 'Web Development Workshop', reservedBy: 'Juan Dela Cruz (IT)', status: 'approved' },
-                { facility: 'Study Room 1', facilityKey: 'study1', time: '1:00 PM – 3:00 PM', purpose: 'Group Study Session', reservedBy: 'Carlos Mendiola (CS)', status: 'approved' },
-            ],
-            '2026-01-20': [
-                { facility: 'Artist Hall', facilityKey: 'artist', time: '2:00 PM – 5:00 PM', purpose: 'IT Symposium 2026', reservedBy: 'Maria Santos (IT)', status: 'pending' },
-            ],
-            '2026-01-22': [
-                { facility: 'Amphitheater', facilityKey: 'amphitheater', time: '10:00 AM – 12:00 PM', purpose: 'Thesis Defense', reservedBy: 'Pablo Garcia (IT)', status: 'approved' },
-                { facility: 'Computer Lab 2', facilityKey: 'lab2', time: '3:00 PM – 5:00 PM', purpose: 'Student Org Meeting', reservedBy: 'Anna Reyes (IT)', status: 'approved' },
-            ],
-            '2026-01-23': [
-                { facility: 'Computer Lab 2', facilityKey: 'lab2', time: '1:00 PM – 3:00 PM', purpose: 'Software Engineering Lab', reservedBy: 'Leo Reyes (IT)', status: 'approved' },
-            ],
-            '2026-01-25': [
-                { facility: 'Library', facilityKey: 'library', time: '8:00 AM – 10:00 AM', purpose: 'Research Study', reservedBy: 'Nina Cruz (CS)', status: 'approved' },
-            ],
-            '2026-01-28': [
-                { facility: 'Room 301', facilityKey: 'room301', time: '9:00 AM – 11:00 AM', purpose: 'Faculty Meeting', reservedBy: 'Prof. Santos', status: 'approved' },
-            ],
-            '2026-02-03': [
-                { facility: 'Genetics', facilityKey: 'genetics', time: '1:00 PM – 3:00 PM', purpose: 'Biology Lab Session', reservedBy: 'Kim Alvarez (Bio)', status: 'approved' },
-            ],
-            '2026-02-10': [
-                { facility: 'Study Room 2', facilityKey: 'study2', time: '3:00 PM – 5:00 PM', purpose: 'Thesis Consultation', reservedBy: 'Marco Diaz (IT)', status: 'pending' },
-                { facility: 'Computer Lab 1', facilityKey: 'lab1', time: '8:00 AM – 10:00 AM', purpose: 'Web Systems Class', reservedBy: 'Prof. Reyes', status: 'approved' },
-            ],
-        };
+        let currentDisplayDate = new Date(2026, 3, 1); // April 2026
+        let selectedFacility = 'all';
+        const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-        const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-        let current = new Date(2026, 0, 1);
-        let activeFilter = 'all';
-
-        const pad = n => String(n).padStart(2, '0');
-        const dateKey = (y, m, d) => `${y}-${pad(m + 1)}-${pad(d)}`;
-
-        function getFiltered(key) {
-            const entries = reservations[key] || [];
-            return activeFilter === 'all' ? entries : entries.filter(r => r.facilityKey === activeFilter);
-        }
-
-        function buildCalendar() {
+        function renderCalendar() {
+            // Keep the day-headers (Sun, Mon, etc.)
             const headers = [...calGrid.querySelectorAll('.day-header')];
             calGrid.innerHTML = '';
             headers.forEach(h => calGrid.appendChild(h));
 
+            const year = currentDisplayDate.getFullYear();
+            const month = currentDisplayDate.getMonth();
+            
             const monthLabel = document.getElementById('monthLabel');
-            if(monthLabel) monthLabel.textContent = `${MONTHS[current.getMonth()]} ${current.getFullYear()}`;
+            if (monthLabel) monthLabel.textContent = `${MONTHS[month]} ${year}`;
 
-            const y = current.getFullYear(), m = current.getMonth();
-            const firstDay = new Date(y, m, 1).getDay();
-            const daysInMonth = new Date(y, m + 1, 0).getDate();
-            const today = new Date();
+            const firstDayIndex = new Date(year, month, 1).getDay();
+            const totalDays = new Date(year, month + 1, 0).getDate();
 
-            for (let i = 0; i < firstDay; i++) {
+            // Previous month empty slots
+            for (let i = 0; i < firstDayIndex; i++) {
                 const empty = document.createElement('div');
                 empty.className = 'day-cell empty';
                 calGrid.appendChild(empty);
             }
 
-            for (let d = 1; d <= daysInMonth; d++) {
-                const key = dateKey(y, m, d);
-                const entries = getFiltered(key);
-                const hasRes = entries.length > 0;
-                const isToday = today.getFullYear() === y && today.getMonth() === m && today.getDate() === d;
+            // Generate Days
+            for (let day = 1; day <= totalDays; day++) {
+                const dateKey = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                
+                const dayReservations = (window.reservations && window.reservations[dateKey]) 
+                    ? window.reservations[dateKey].filter(res => selectedFacility === 'all' || res.facilityKey === selectedFacility)
+                    : [];
 
                 const cell = document.createElement('div');
-                cell.className = ['day-cell', hasRes ? 'has-reservations' : '', isToday ? 'today' : ''].filter(Boolean).join(' ');
+                cell.className = `day-cell ${dayReservations.length > 0 ? 'has-reservations' : ''}`;
+                cell.innerHTML = `<div class="day-num">${day}</div>`;
 
-                const num = document.createElement('div');
-                num.className = 'day-num';
-                num.textContent = d;
-                cell.appendChild(num);
+                dayReservations.forEach(res => {
+                    const pill = document.createElement('div');
+                    pill.className = 'res-pill';
+                    pill.textContent = res.facility;
+                    cell.appendChild(pill);
+                });
 
-                if (hasRes) {
-                    entries.forEach(r => {
-                        const pill = document.createElement('div');
-                        pill.className = 'res-pill';
-                        pill.textContent = r.time;
-                        cell.appendChild(pill);
-                    });
-                    cell.addEventListener('click', () => openCalendarModal(key, y, m, d));
+                if (dayReservations.length > 0) {
+                    cell.onclick = () => {
+                        const title = document.getElementById('modalTitle');
+                        const body = document.getElementById('modalBody');
+                        const resModal = document.getElementById('modalOverlay');
+                        
+                        if(title) title.textContent = "Reservations: " + dateKey;
+                        if(body) {
+                            body.innerHTML = dayReservations.map(res => `
+                                <div style="border-bottom:1px solid #eee; padding:10px 0;">
+                                    <strong style="color:#7c6fe0">${res.facility}</strong><br>
+                                    <small>${res.time} | ${res.purpose}</small>
+                                </div>
+                            `).join('');
+                        }
+                        if(resModal) resModal.style.display = "flex";
+                    };
                 }
                 calGrid.appendChild(cell);
             }
         }
 
-        function openCalendarModal(key, y, m, d) {
-            const entries = getFiltered(key);
-            const title = document.getElementById('modalTitle');
-            const body = document.getElementById('modalBody');
-            const overlay = document.getElementById('modalOverlay');
+        // Calendar Event Listeners
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const facilityFilter = document.getElementById('facilityFilter');
+        const modalClose = document.getElementById('modalClose');
 
-            if(title) title.textContent = `${MONTHS[m]} ${d}, ${y}`;
-            if(body) {
-                body.innerHTML = entries.length === 0 ? '<p class="modal-empty">No reservations.</p>' : '';
-                entries.forEach(r => {
-                    const item = document.createElement('div');
-                    item.className = 'modal-res-item';
-                    item.innerHTML = `
-                        <div class="modal-res-info">
-                            <div class="modal-res-facility">${r.facility}</div>
-                            <div class="modal-res-time"><i class="far fa-clock"></i> ${r.time}</div>
-                            <div class="modal-res-detail">${r.purpose}</div>
-                            <div class="modal-res-detail"><strong>By:</strong> ${r.reservedBy}</div>
-                        </div>
-                        <span class="modal-badge ${r.status}">${r.status}</span>
-                    `;
-                    body.appendChild(item);
-                });
-            }
-            if(overlay) overlay.classList.add('open');
-        }
+        if (prevBtn) prevBtn.onclick = () => { currentDisplayDate.setMonth(currentDisplayDate.getMonth() - 1); renderCalendar(); };
+        if (nextBtn) nextBtn.onclick = () => { currentDisplayDate.setMonth(currentDisplayDate.getMonth() + 1); renderCalendar(); };
+        if (facilityFilter) facilityFilter.onchange = (e) => { selectedFacility = e.target.value; renderCalendar(); };
+        if (modalClose) modalClose.onclick = () => { document.getElementById('modalOverlay').style.display = 'none'; };
 
-        // Calendar Listeners
-        document.getElementById('prevBtn')?.addEventListener('click', () => { current.setMonth(current.getMonth() - 1); buildCalendar(); });
-        document.getElementById('nextBtn')?.addEventListener('click', () => { current.setMonth(current.getMonth() + 1); buildCalendar(); });
-        document.getElementById('facilityFilter')?.addEventListener('change', e => { activeFilter = e.target.value; buildCalendar(); });
-        document.getElementById('modalClose')?.addEventListener('click', () => document.getElementById('modalOverlay').classList.remove('open'));
-        
-        document.getElementById('modalOverlay')?.addEventListener('click', e => {
-            if (e.target === e.currentTarget) e.target.classList.remove('open');
-        });
-
-        buildCalendar();
+        renderCalendar();
     }
 });
