@@ -1,66 +1,44 @@
-     <main class="main">
-            <div class="res-calendar-card">
+@extends('layout.app') @push('styles')
+    <link rel="stylesheet" href="{{ asset('css/calendar.css') }}">
+@endpush
 
-                <!-- Card header -->
-                <div class="cal-header">
-                    <div class="cal-title">
-                        <i class="fas fa-calendar-check"></i>
-                        Reservation Calendar
-                    </div>
-                    <select class="facility-select" id="facilityFilter">
-                        <option value="all">All Facilities</option>
-                        <option value="room301">Room 301</option>
-                        <option value="room309">Room 309</option>
-                        <option value="room308">Room 308</option>
-                        <option value="lab1">Computer Lab 1</option>
-                        <option value="lab2">Computer Lab 2</option>
-                        <option value="artist">Artist Hall</option>
-                        <option value="genetics">Genetics</option>
-                        <option value="library">Library</option>
-                        <option value="amphitheater">Amphitheater</option>
-                        <option value="study1">Study Room 1</option>
-                        <option value="study2">Study Room 2</option>
-                    </select>
-                </div>
+@section('content')
+<div class="calendar-container">
+    <div class="calendar-header">
+        <h2><i class="fas fa-calendar-alt"></i> Reservation Calendar</h2>
+        <select id="facilityFilter">
+            <option value="all">All Facilities</option>
+            <option value="room301">Room 301</option>
+        </select>
+    </div>
 
-                <!-- Month navigation -->
-                <div class="month-nav">
-                    <button class="nav-btn" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
-                    <span class="month-label" id="monthLabel"></span>
-                    <button class="nav-btn" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
-                </div>
-
-                <!-- Calendar grid -->
-                <div class="cal-grid" id="calGrid">
-                    <div class="day-header">Sun</div>
-                    <div class="day-header">Mon</div>
-                    <div class="day-header">Tue</div>
-                    <div class="day-header">Wed</div>
-                    <div class="day-header">Thu</div>
-                    <div class="day-header">Fri</div>
-                    <div class="day-header">Sat</div>
-                </div>
-
-                <!-- Legend -->
-                <div class="legend">
-                    <div class="legend-item">
-                        <div class="legend-dot available"></div> Available
-                    </div>
-                    <div class="legend-item">
-                        <div class="legend-dot has-res"></div> Has Reservations
-                    </div>
-                </div>
-
-            </div>
-        </main>
-
-        <!-- MODAL -->
-        <div class="modal-overlay" id="modalOverlay">
-            <div class="modal">
-                <div class="modal-header">
-                    <h3 class="modal-title" id="modalTitle"></h3>
-                    <button class="modal-close" id="modalClose"><i class="fas fa-times"></i></button>
-                </div>
-                <div class="modal-body" id="modalBody"></div>
-            </div>
+    <div class="calendar-card">
+        <div class="month-nav">
+            <button class="nav-btn" id="prevBtn">&lt;</button>
+            <span class="month-label">January 2026</span>
+            <button class="nav-btn" id="nextBtn">&gt;</button>
         </div>
+
+        <div class="cal-grid">
+            <div class="day-header">Sun</div>
+            <div class="day-header">Mon</div>
+            <div class="day-header">Tue</div>
+            <div class="day-header">Wed</div>
+            <div class="day-header">Thu</div>
+            <div class="day-header">Fri</div>
+            <div class="day-header">Sat</div>
+
+            <div class="day-cell empty"></div>
+            <div class="day-cell">1</div>
+            <div class="day-cell has-res">
+                2 <span class="res-pill">3 Res</span>
+            </div>
+            </div>
+
+        <div class="legend">
+            <div class="legend-item"><div class="dot available"></div> Available</div>
+            <div class="legend-item"><div class="dot reserved"></div> Has Reservations</div>
+        </div>
+    </div>
+</div>
+@endsection
