@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Benedicto College - Facility Reservation System</title>
-    <link rel="stylesheet" href="{{ asset('css/login.css') }}">
+    {{-- Cache busting added here to ensure CSS updates --}}
+    <link rel="stylesheet" href="{{ asset('css/login.css') }}?v={{ time() }}">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
 
     <div class="main-container" id="container">
-        {{-- Login Container --}}
+        {{-- 1. Login Container --}}
         <div class="form-container login-container">
             <div class="blue-panel left-panel">
                 <div class="panel-content">
@@ -27,28 +28,32 @@
                 <h2>Login</h2>
                 <p class="subtitle">Enter your credentials to access your account</p>
 
-                <form action="{{ url('/dashboard') }}" method="GET">
+                <form action="{{ route('login') }}" method="POST">
+                    @csrf
                     <div class="input-group">
                         <label>School ID</label>
                         <div class="input-field">
-                            <input type="text" placeholder="2026-00057" required>
+                            <input type="text" name="student_id" placeholder="2026-00057" required autofocus>
                             <i class='bx bxs-user'></i>
                         </div>
                     </div>
+
                     <div class="input-group">
                         <label>Password</label>
                         <div class="input-field">
-                            <input type="password" placeholder="Enter your password" required>
+                            <input type="password" name="password" placeholder="Enter your password" required>
                             <i class='bx bxs-lock-alt'></i>
                         </div>
                     </div>
+
                     <button type="submit" class="btn-signin">Sign in <i class='bx bx-log-in-circle'></i></button>
                 </form>
+
                 <p class="toggle-text">Don't have an account? <span id="toSignUp">Sign up</span></p>
             </div>
         </div>
 
-        
+        {{-- 2. Signup Container --}}
         <div class="form-container signup-container">
             <div class="form-content">
                 <h2>Create Account</h2>
@@ -56,15 +61,15 @@
                     <h3>Sign Up</h3>
                     <p class="subtitle">Create your account</p>
                 </div>
-                <form>
-                   
-                    <button type="submit" class="btn-create">Create Account</button>
+                <form action="#" method="POST">
+                    @csrf
+                    <p style="text-align: center; color: var(--text-muted); margin-bottom: 20px;">Registration is currently handled by the Registrar.</p>
+                    <button type="submit" class="btn-create" disabled>Coming Soon</button>
                 </form>
             </div>
 
             <div class="blue-panel right-panel">
                 <div class="panel-content">
-
                     <h1>Welcome to Benedicto College!</h1>
                     <p>Already have an account?</p>
                     <button class="btn-outline" id="toLoginBtn">Login</button>

@@ -18,10 +18,20 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    'name',
+    'student_id', // Added
+    'email',
+    'password',
+    'role',
+    'course',
+    'status',
+];
+
+// Add this function so Laravel knows to use student_id instead of email
+public function username()
+{
+    return 'student_id';
+}
 
     /**
      * The attributes that should be hidden for serialization.

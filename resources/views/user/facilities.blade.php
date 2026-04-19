@@ -1,10 +1,10 @@
+
+<h2 class="page-title">Showing 8 Facilities</h2>
 @if(session('success'))
-    <div style="background: #d4edda; color: #155724; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+    <div style="background: #28a745; color: white; padding: 15px; border-radius: 10px; margin-bottom: 20px; text-align: center; font-weight: bold; box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);">
         {{ session('success') }}
     </div>
 @endif
-
-<h2 class="page-title">Showing 8 Facilities</h2>
 
 <div class="search-bar">
     <input type="text" id="searchInput" placeholder="Search Here...">

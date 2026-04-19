@@ -6,23 +6,15 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        
         Schema::create('room_type', function (Blueprint $table) {
-            $table->id('roomtype_id'); 
-            $table->string('type_name');
-            $table->string('status');
+            $table->id('roomtype_id');
+            $table->string('type_name'); // e.g., Computer Lab, Auditorium
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('room_type');
