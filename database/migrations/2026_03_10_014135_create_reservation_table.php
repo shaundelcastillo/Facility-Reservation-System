@@ -11,22 +11,24 @@ return new class extends Migration
      */
     public function up(): void
     {
-        
         Schema::create('reservations', function (Blueprint $table) {
-            $table->id('reservation_id'); // Matches PK in ERD
+            $table->id('reservation_id'); // Primary Key
+
+            // Foreign Key to Users table
+            $table->foreignId('user_id')->constrained('users', 'user_id')->onDelete('cascade');
             
-            
-            $table->foreignId('user_id')->constrained('users', 'user_id');
-            $table->foreignId('room_id')->constrained('rooms', 'room_id');
-            
+            // Foreign Key to Rooms/Facilities table
+            // Ensure you have a 'rooms' migration with $table->id('room_id')
+            $table->foreignId('room_id')->constrained('rooms', 'room_id')->onDelete('cascade');
             
             $table->dateTime('start_time');
             $table->dateTime('end_time');
             $table->text('purpose');
-            $table->string('status');
+            $table->string('status')->default('pending'); // Default status for new requests
             
-           
-            $table->foreignId('approve_by')->nullable()->constrained('admin', 'admin_id');
+            // Foreign Key for Admin approval
+            // Ensure you have an 'admin' migration with $table->id('admin_id')
+            $table->foreignId('approve_by')->nullable()->constrained('admin', 'admin_id')->onDelete('set null');
             
             $table->timestamps();
         });

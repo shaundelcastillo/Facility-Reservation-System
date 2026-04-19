@@ -166,3 +166,16 @@ body.modal-open > *:not(.modal) { filter: blur(6px); pointer-events: none; }
 .modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; }
 .btn-primary { background: #7d70fa; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; }
 .btn-secondary { background: #eee; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; }
+
+/* Explicit styles to make the alert visible */
+.alert-success {
+    display: block !important;
+    background-color: #28a745 !important;
+    color: #ffffff !important;
+    padding: 20px !important;
+    margin: 20px 0 !important;
+    border-radius: 8px !important;
+    text-align: center !important;
+    position: relative !important;
+    z-index: 1000 !important;
+}
