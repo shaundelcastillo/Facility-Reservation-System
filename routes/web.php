@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\AdminController;
+use App\Models\Reservation;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,12 +13,10 @@ use App\Http\Controllers\AdminController;
 */
 
 // 1. Landing & Authentication
-// 1. Landing & Authentication
 Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
 
-// ADD THESE TWO LINES:
 Route::get('/login', function () {
     return view('welcome');
 })->name('login');
@@ -29,38 +28,37 @@ Route::post('/logout', function () {
     return redirect()->route('welcome');
 })->name('logout');
 
-// ... rest of your student and admin routes ...
 
-// 2. Student Dashboard
+// ... (Your Authentication routes are fine)
+
+// 2. Student Dashboard (Keep this as is, it's working well)
 Route::get('/dashboard', function () {
-    return view('user.dashboard');
-})->name('dashboard');
+    $userId = Auth::id();
+    $total = Reservation::where('user_id', $userId)->count();
+    $pending = Reservation::where('user_id', $userId)->where('status', 'pending')->count();
+    $approved = Reservation::where('user_id', $userId)->where('status', 'approved')->count();
+    $recent = Reservation::with('room')->where('user_id', $userId)->orderBy('created_at', 'desc')->first();
 
-// 3. Facilities Page
-Route::get('/facilities', function () {
-    return view('user.facilities'); 
-})->name('facilities');
+    return view('user.dashboard', compact('total', 'pending', 'approved', 'recent'));
+})->name('dashboard')->middleware('auth');
 
-// 4. Reservation & Calendar Pages
-Route::get('/reservation', function () {
-    return view('user.reservation'); // Note: Changed to user.reservation to match your file structure
-})->name('reservation');
+// 3. Use the ReservationController for Student Actions
+Route::middleware(['auth'])->group(function () {
+    Route::get('/reservation', [ReservationController::class, 'myReservations'])->name('reservation');
+    Route::get('/facilities', [ReservationController::class, 'index'])->name('facilities');
+    Route::get('/calendar', [ReservationController::class, 'showCalendar'])->name('calendar');
+    Route::post('/reservations/store', [ReservationController::class, 'store'])->name('reservations.store');
+    Route::delete('/reservation/{id}', [ReservationController::class, 'destroy'])->name('reservation.destroy');
+});
 
-Route::get('/calendar', function () {
-    return view('user.calendar');
-})->name('calendar');
-
-// 5. Database Logic - Handling the "Submit Reservation" button
-Route::post('/reservations/store', [ReservationController::class, 'store'])->name('reservations.store');
-
-Route::prefix('admin')->group(function () {
-    // Page Routes
+// 4. Admin Routes - UPDATED
+Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::get('/overview', [AdminController::class, 'dashboard'])->name('admin.home');
     Route::get('/reservations', [AdminController::class, 'reservations'])->name('admin.reservations');
-    Route::get('/facilities', [AdminController::class, 'facilities'])->name('admin.facilities');
-
-    // API Routes (Called by JS)
-    Route::get('/api/dashboard-data', [AdminController::class, 'getDashboardData']);
-    Route::get('/api/all-reservations', [AdminController::class, 'getAllReservations']);
-    Route::post('/api/update-status', [AdminController::class, 'updateStatus']);
+    
+    // ADD THIS LINE TO FIX THE ERROR
+    Route::get('/facilities', [AdminController::class, 'facilities'])->name('admin.adminfacilities');
+    
+    // This route MUST match the form action in your blade
+    Route::post('/reservations/update/{id}', [AdminController::class, 'updateStatus'])->name('admin.updateStatus');
 });

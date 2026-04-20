@@ -54,3 +54,66 @@
     justify-content: space-between; 
     align-items: center; 
 }
+
+/* Browse Button - Benedicto College Colors */
+.btn-browse {
+    display: inline-block;
+    background: white;
+    color: #3182ce; /* Match your primary blue */
+    padding: 12px 28px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 700;
+    margin-top: 15px;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.btn-browse:hover {
+    background: #f7fafc;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Action Cards - Making them look like buttons */
+.action-card {
+    text-decoration: none;
+    display: block;
+    transition: transform 0.2s ease;
+}
+
+.action-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Recent Reservation Buttons */
+.btn-detail {
+    background: #edf2f7;
+    color: #4a5568;
+    padding: 8px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.btn-cancel {
+    background: #fff5f5;
+    color: #c53030;
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: 1px solid #feb2b2;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-view-all {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid white;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+}

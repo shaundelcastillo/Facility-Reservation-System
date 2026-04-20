@@ -6,10 +6,6 @@
     <link rel="stylesheet" href="{{ asset('admincss/adminreservation.css') }}">
 @endsection
 
-@section('extra-js')
-    <script src="{{ asset('adminjs/adminreservation.js') }}"></script>
-@endsection
-
 @section('content')
 <div class="data-container">
     <h3>All Reservations</h3>
@@ -28,13 +24,41 @@
                     <th>Actions</th>
                 </tr>
             </thead>
-            <tbody id="reservation-tbody">
-                </tbody>
+            <tbody>
+                @foreach($reservations as $res)
+                <tr>
+                    <td>{{ $res->user->name ?? 'Unknown' }}</td>
+                    <td>{{ $res->room->room_number ?? 'N/A' }}</td>
+                    <td>{{ \Carbon\Carbon::parse($res->start_time)->format('Y-m-d') }}</td>
+                    <td>{{ \Carbon\Carbon::parse($res->start_time)->format('H:i') }} - {{ \Carbon\Carbon::parse($res->end_time)->format('H:i') }}</td>
+                    <td>{{ $res->purpose }}</td>
+                    <td>
+                        <span class="badge {{ $res->status }}">{{ ucfirst($res->status) }}</span>
+                    </td>
+                    <td>
+                        @if($res->status == 'pending')
+                            <form action="{{ route('admin.updateStatus', $res->reservation_id) }}" method="POST" style="display:inline;">
+                                @csrf
+                                <input type="hidden" name="status" value="approved">
+                                <button type="submit" class="btn-check"><i class="fas fa-check-square"></i></button>
+                            </form>
+                            <form action="{{ route('admin.updateStatus', $res->reservation_id) }}" method="POST" style="display:inline;">
+                                @csrf
+                                <input type="hidden" name="status" value="rejected">
+                                <button type="submit" class="btn-cross"><i class="fas fa-times-circle"></i></button>
+                            </form>
+                        @else
+                            --
+                        @endif
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
         </table>
     </div>
 </div>
 @endsection
 
 @section('extra-js')
-    <script src="{{ asset('js/reservation.js') }}"></script>
+    <script src="{{ asset('adminjs/adminreservation.js') }}"></script>
 @endsection

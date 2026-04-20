@@ -10,14 +10,6 @@
     <input type="text" id="searchInput" placeholder="Search Here...">
 </div>
 
-<div class="filters">
-    <button class="filter-btn active" data-type="all">All Facilities</button>
-    <button class="filter-btn" data-type="classroom">Classrooms</button>
-    <button class="filter-btn" data-type="lab">Computer Labs</button>
-    <button class="filter-btn" data-type="conference">Conference Rooms</button>
-    <button class="filter-btn" data-type="auditorium">Auditoriums</button>
-</div>
-
 <div class="card-grid">
     <div class="facility-card classroom" data-name="Room 301">
         <img src="https://i.pinimg.com/1200x/c0/c0/e4/c0c0e43255d9adcff141a7eb54a04e83.jpg" class="facility-img">

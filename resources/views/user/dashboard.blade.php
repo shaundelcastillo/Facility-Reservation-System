@@ -1,6 +1,5 @@
 @extends('layout.app')
 
-{{-- Add this block to link your CSS --}}
 @push('styles')
     <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
 @endpush
@@ -8,23 +7,24 @@
 @section('content')
     <section class="welcome-banner">
         <div class="notification-dot"></div>
-        <h1>Welcome, Juan Dela Cruz</h1>
-        <p>Easily book classrooms, computer labs, conference rooms, and other school facilities for your activities and events.</p>
-        <button class="btn-browse">Browse Available Facilities</button>
+        <h1>Welcome, {{ Auth::user()->name ?? 'Student' }}</h1>
+        <p>Easily book classrooms, computer labs, and other school facilities.</p>
+        {{-- Fixed Button with Link --}}
+        <a href="{{ route('facilities') }}" class="btn-browse">Browse Available Facilities</a>
     </section>
 
     <section class="stats-grid">
         <div class="stat-card">
             <h3>Total Reservations</h3>
-            <span class="num">5</span>
+            <span class="num">{{ $total }}</span>
         </div>
         <div class="stat-card">
             <h3>Pending</h3>
-            <span class="num">1</span>
+            <span class="num">{{ $pending }}</span>
         </div>
         <div class="stat-card">
             <h3>Approved</h3>
-            <span class="num">4</span>
+            <span class="num">{{ $approved }}</span>
         </div>
     </section>
 
@@ -34,24 +34,26 @@
             <p>Get started with these common tasks</p>
         </div>
         <div class="action-grid">
-            <div class="action-card">
+            <a href="{{ route('facilities') }}" class="action-card">
                 <i class="fas fa-building"></i>
                 <h4>Book a facility</h4>
                 <p>Browse and reserve available rooms</p>
-            </div>
-            <div class="action-card">
+            </a>
+            <a href="{{ route('reservation') }}" class="action-card">
                 <i class="fas fa-clipboard-list"></i>
                 <h4>View my reservation</h4>
                 <p>Manage your reservation</p>
-            </div>
-            <div class="action-card">
+            </a>
+            <a href="{{ route('calendar') }}" class="action-card">
                 <i class="fas fa-calendar-check"></i>
                 <h4>Check your calendar</h4>
                 <p>View availability schedule</p>
-            </div>
+            </a>
         </div>
     </section>
 
+    {{-- Only show if real data exists --}}
+    @if($recent)
     <section class="panel">
         <div class="panel-header">
             <h3>Recent Reservations</h3>
@@ -61,26 +63,31 @@
         <div class="res-item">
             <div class="res-left">
                 <div>
-                    <span class="res-title">Computer Lab 1</span>
-                    <span class="badge approved">Approved</span>
+                    <span class="res-title">{{ $recent->room->room_number }}</span>
+                    <span class="badge {{ $recent->status }}">{{ ucfirst($recent->status) }}</span>
                 </div>
                 <div class="res-info-grid">
-                    <span><i class="far fa-calendar-alt"></i> September 11, 2026</span>
-                    <span><i class="fas fa-info-circle"></i> Purpose: Web Development</span>
-                    <span><i class="fas fa-user"></i> Reserved by: Hugo Villa (IT)</span>
+                    <span><i class="far fa-calendar-alt"></i> {{ \Carbon\Carbon::parse($recent->start_time)->format('F d, Y') }}</span>
+                    <span><i class="fas fa-info-circle"></i> Purpose: {{ $recent->purpose }}</span>
+                    <span><i class="fas fa-user"></i> Reserved by: {{ Auth::user()->name }}</span>
                 </div>
             </div>
             <div class="res-right">
-                <div class="res-time"><i class="far fa-clock"></i> 9:00 AM - 11:00 AM</div>
+                <div class="res-time"><i class="far fa-clock"></i> {{ \Carbon\Carbon::parse($recent->start_time)->format('h:i A') }} - {{ \Carbon\Carbon::parse($recent->end_time)->format('h:i A') }}</div>
                 <div class="res-actions">
-                    <button><i class="far fa-eye"></i> View Details</button>
-                    <button class="btn-cancel"><i class="fas fa-times"></i> Cancel</button>
+                    <a href="{{ route('reservation') }}" class="btn-detail">View Details</a>
+                    {{-- Standard form for delete --}}
+                    <form action="{{ route('reservation.destroy', $recent->id) }}" method="POST" style="display:inline;">
+                        @csrf @method('DELETE')
+                        <button type="submit" class="btn-cancel">Cancel</button>
+                    </form>
                 </div>
             </div>
         </div>
 
         <div class="footer-center">
-            <button class="btn-view-all">View All Reservations</button>
+            <a href="{{ route('reservation') }}" class="btn-view-all">View All Reservations</a>
         </div>
     </section>
+    @endif
 @endsection

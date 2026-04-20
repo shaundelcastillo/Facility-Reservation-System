@@ -29,7 +29,7 @@
     <header class="main-header">
         <div class="logo-section">
             <div class="logo-circle">
-                <img src="https://scontent.fmnl17-3.fna.fbcdn.net/..." alt="Logo" class="header-logo">
+                <img src="https://scontent.fmnl17-3.fna.fbcdn.net/v/t39.30808-6/380790490_810610521073768_1413158087196732061_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=1d70fc&_nc_eui2=AeGevFTcyEEg8FLGksLW7tfTjRg-_uuZFZaNGD7-65kVliRyjXxY9EBA6fdLY3Sse2cl7Rr7XKRfrgnlO7BXAlKk&_nc_ohc=ek-8v86NVkUQ7kNvwFN2R8R&_nc_oc=AdqBIAJOhBrsCg8Zja_D7_YGVyMkxiHTZpfniIp_P5Lmal_--eYskxEhC03xlaots4U&_nc_zt=23&_nc_ht=scontent.fmnl17-3.fna&_nc_gid=-8ICfkLpNxpDx8H76WTpOg&_nc_ss=7a3a8&oh=00_Af1xxnN8an7ZhlfJc8CZcVDwpdZxaYzdm9I2cz-iZ1--wA&oe=69EC3210" alt="Logo" class="header-logo">
             </div>
             <div class="logo-text">
                 <h1>Facility Reservation System</h1>
@@ -54,8 +54,8 @@
                <i class='bx bx-calendar-event'></i> Reservations
             </a>
             
-            <a href="{{ route('admin.facilities') }}" 
-               class="nav-item {{ Route::is('admin.facilities') ? 'active' : '' }}">
+            <a href="{{ route('admin.adminfacilities') }}" 
+               class="nav-item {{ Route::is('admin.adminfacilities') ? 'active' : '' }}">
                <i class='bx bx-building-house'></i> Facilities
             </a>
         </div>
