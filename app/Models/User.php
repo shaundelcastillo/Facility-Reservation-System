@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -13,30 +12,35 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
 
     /**
+     * Tell Laravel the primary key is 'user_id', not 'id'
+     * This matches your database structure shown in your migrations.
+     */
+    protected $primaryKey = 'user_id'; 
+
+    /**
      * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
      */
     protected $fillable = [
-    'name',
-    'student_id', // Added
-    'email',
-    'password',
-    'role',
-    'course',
-    'status',
-];
+        'name',
+        'student_id',
+        'email',
+        'password',
+        'role',
+        'course',
+        'status',
+    ];
 
-// Add this function so Laravel knows to use student_id instead of email
-public function username()
-{
-    return 'student_id';
-}
+    /**
+     * This tells Laravel to use 'student_id' for authentication 
+     * instead of the default 'email'.
+     */
+    public function username()
+    {
+        return 'student_id';
+    }
 
     /**
      * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
      */
     protected $hidden = [
         'password',
@@ -45,8 +49,6 @@ public function username()
 
     /**
      * The attributes that should be cast.
-     *
-     * @var array<string, string>
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
