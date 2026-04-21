@@ -123,3 +123,39 @@ body { background-color: var(--bg-light); color: #333; }
 
 .btn-cancel { background: #ff5e5e; color: white; }
 .btn-confirm { background: #2ecc71; color: white; }
+
+/* Ensure buttons are visible and clickable */
+.btn-check, .btn-cross {
+    background: transparent !important;
+    border: none !important;
+    cursor: pointer;
+    font-size: 22px; /* Makes icons large enough to see */
+    padding: 5px;
+    display: inline-block;
+    transition: transform 0.2s ease;
+}
+
+.btn-check i {
+    color: #2ecc71 !important; /* Force Bright Green */
+}
+
+.btn-cross i {
+    color: #e74c3c !important; /* Force Bright Red */
+}
+
+.btn-check:hover, .btn-cross:hover {
+    transform: scale(1.2);
+}
+
+/* Fix for the Status Badges to match your user side */
+.badge {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.badge.pending { background-color: #ff9f43; color: white; }
+.badge.approved { background-color: #2ecc71; color: white; }
+.badge.rejected { background-color: #e74c3c; color: white; }

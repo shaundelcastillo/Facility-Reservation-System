@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\AdminController;
 use App\Models\Reservation;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +23,9 @@ Route::get('/login', function () {
     return view('welcome');
 })->name('login');
 
-Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login']);
+// Login and Registration Logic
+Route::post('/login', [LoginController::class, 'login']);
+Route::post('/register', [RegisterController::class, 'register'])->name('register');
 
 Route::post('/logout', function () {
     Auth::logout();
@@ -29,9 +33,7 @@ Route::post('/logout', function () {
 })->name('logout');
 
 
-// ... (Your Authentication routes are fine)
-
-// 2. Student Dashboard (Keep this as is, it's working well)
+// 2. Student Dashboard
 Route::get('/dashboard', function () {
     $userId = Auth::id();
     $total = Reservation::where('user_id', $userId)->count();
@@ -42,7 +44,8 @@ Route::get('/dashboard', function () {
     return view('user.dashboard', compact('total', 'pending', 'approved', 'recent'));
 })->name('dashboard')->middleware('auth');
 
-// 3. Use the ReservationController for Student Actions
+
+// 3. Student Actions (Reservation & Facilities)
 Route::middleware(['auth'])->group(function () {
     Route::get('/reservation', [ReservationController::class, 'myReservations'])->name('reservation');
     Route::get('/facilities', [ReservationController::class, 'index'])->name('facilities');
@@ -51,14 +54,11 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/reservation/{id}', [ReservationController::class, 'destroy'])->name('reservation.destroy');
 });
 
-// 4. Admin Routes - UPDATED
+
+// 4. Admin Routes
 Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::get('/overview', [AdminController::class, 'dashboard'])->name('admin.home');
     Route::get('/reservations', [AdminController::class, 'reservations'])->name('admin.reservations');
-    
-    // ADD THIS LINE TO FIX THE ERROR
     Route::get('/facilities', [AdminController::class, 'facilities'])->name('admin.adminfacilities');
-    
-    // This route MUST match the form action in your blade
     Route::post('/reservations/update/{id}', [AdminController::class, 'updateStatus'])->name('admin.updateStatus');
 });
