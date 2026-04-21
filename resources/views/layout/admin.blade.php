@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title') - Benedicto College</title>
     
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('css/adminhome.css') }}">
     @yield('extra-css')
 </head>
@@ -55,7 +55,7 @@
             </a>
             
             <a href="{{ route('admin.adminfacilities') }}" 
-               class="nav-item {{ Route::is('admin.adminfacilities') ? 'active' : '' }}">
+               class="nav-item {{ Route::is('admin.facilities') ? 'active' : '' }}">
                <i class='bx bx-building-house'></i> Facilities
             </a>
         </div>

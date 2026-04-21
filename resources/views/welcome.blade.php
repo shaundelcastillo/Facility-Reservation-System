@@ -54,29 +54,69 @@
         </div>
 
         {{-- 2. Signup Container --}}
-        <div class="form-container signup-container">
-            <div class="form-content">
-                <h2>Create Account</h2>
-                <div class="signup-header">
-                    <h3>Sign Up</h3>
-                    <p class="subtitle">Create your account</p>
+<div class="form-container signup-container">
+    <div class="form-content">
+        <h2>Create Account</h2>
+        <div class="signup-header">
+            <h3>Sign Up</h3>
+            <p class="subtitle">Create your account</p>
+        </div>
+
+        {{-- Updated Form --}}
+        <form action="{{ route('register') }}" method="POST">
+            @csrf
+            <div class="input-group">
+                <label>Full Name</label>
+                <div class="input-field">
+                    <input type="text" name="name" placeholder="Juan Dela Cruz" required>
+                    <i class='bx bxs-user-detail'></i>
                 </div>
-                <form action="#" method="POST">
-                    @csrf
-                    <p style="text-align: center; color: var(--text-muted); margin-bottom: 20px;">Registration is currently handled by the Registrar.</p>
-                    <button type="submit" class="btn-create" disabled>Coming Soon</button>
-                </form>
             </div>
 
-            <div class="blue-panel right-panel">
-                <div class="panel-content">
-                    <h1>Welcome to Benedicto College!</h1>
-                    <p>Already have an account?</p>
-                    <button class="btn-outline" id="toLoginBtn">Login</button>
+            <div class="input-group">
+                <label>Email</label>
+                <div class="input-field">
+                    <input type="email" name="email" placeholder="example@gmail.com" required>
+                    <i class='bx bxs-envelope'></i>
                 </div>
             </div>
+
+            <div class="input-group">
+                <label>Student/Faculty ID</label>
+                <div class="input-field">
+                    <input type="text" name="student_id" placeholder="2026-00057" required>
+                    <i class='bx bxs-id-card'></i>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>Password</label>
+                <div class="input-field">
+                    <input type="password" name="password" placeholder="Minimum 8 characters" required>
+                    <i class='bx bxs-lock-open-alt'></i>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>Confirm Password</label>
+                <div class="input-field">
+                    <input type="password" name="password_confirmation" placeholder="Re-enter your password" required>
+                    <i class='bx bxs-lock-alt'></i>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-create">Create Account <i class='bx bx-user-plus'></i></button>
+        </form>
+    </div>
+
+    <div class="blue-panel right-panel">
+        <div class="panel-content">
+            <h1>Welcome to Benedicto College!</h1>
+            <p>Already have an account?</p>
+            <button class="btn-outline" id="toLoginBtn">Login</button>
         </div>
     </div>
+</div>
 
     <script src="{{ asset('js/login.js') }}"></script>
 </body>

@@ -58,39 +58,37 @@ class ReservationController extends Controller
         ]);
     }
 
-    /**
-     * Store a new reservation in the database.
-     */
     public function store(Request $request)
-    {
-        $request->validate([
-            'facility_name' => 'required',
-            'full_name' => 'required|string|max:255',
-            'department' => 'required|string|max:255',
-            'date' => 'required|date',
-            'start_time' => 'required',
-            'end_time' => 'required',
-            'purpose' => 'nullable|string',
-        ]);
+{
+    // 1. Validation
+    $request->validate([
+        'facility_name' => 'required',
+        'date' => 'required|date|after_or_equal:today',
+        'start_time' => 'required',
+        'end_time' => 'required|after:start_time',
+        'purpose' => 'required|string|max:255',
+    ]);
 
-        $room = Room::where('room_number', $request->facility_name)->first();
+    // 2. Find the Room by its number (e.g., "Room 301")
+    $room = Room::where('room_number', $request->facility_name)->first();
 
-        if (!$room) {
-            return redirect()->back()->with('error', 'Facility not found.');
-        }
-
-        Reservation::create([
-            'user_id'    => Auth::id(),
-            'room_id'    => $room->room_id,
-            'start_time' => $request->date . ' ' . $request->start_time,
-            'end_time'   => $request->date . ' ' . $request->end_time,
-            'purpose'    => $request->purpose,
-            'status'     => 'pending', 
-        ]);
-
-        return redirect()->route('facilities')->with('success', 'Your reservation for ' . $request->facility_name . ' has been submitted!');
+    if (!$room) {
+        return redirect()->back()->with('error', 'Facility not found.');
     }
 
+    // 3. Create the Reservation linked to YOUR User ID
+    Reservation::create([
+        'user_id'    => Auth::id(), // Detects your real logged-in ID
+        'room_id'    => $room->room_id,
+        'start_time' => $request->date . ' ' . $request->start_time,
+        'end_time'   => $request->date . ' ' . $request->end_time,
+        'purpose'    => $request->purpose,
+        'status'     => 'pending', 
+    ]);
+
+    // 4. Redirect with a success message
+    return redirect()->route('dashboard')->with('success', 'Your reservation for ' . $request->facility_name . ' has been submitted!');
+}
     public function destroy($id)
 {
     // Change 'id' to 'reservation_id' to match your database
