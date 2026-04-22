@@ -12,13 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('facilities', function (Blueprint $table) {
-            $table->id('facility_id'); 
+            $table->id(); // Standard ID
             $table->string('name');
-            
-            
-            $table->foreignId('room_id')->constrained('rooms', 'room_id');
-            
-            $table->string('status');
+            $table->text('description')->nullable();
+            $table->integer('capacity')->default(0);
+            $table->text('amenities')->nullable(); // This stores your tags like "AIR CONDITION"
+            $table->string('status')->default('available');
             $table->timestamps();
         });
     }

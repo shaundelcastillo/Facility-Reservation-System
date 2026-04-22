@@ -1,3 +1,6 @@
+/* =============================================================
+   GLOBAL THEME & VARIABLES
+   ============================================================= */
 :root {
     --primary-blue: #4DA8FF;
     --sidebar-width: 280px;
@@ -8,7 +11,9 @@
     --nav-hover: rgba(255, 255, 255, 0.2);
 }
 
-* { box-sizing: border-box; }
+* { 
+    box-sizing: border-box; 
+}
 
 body, html {
     margin: 0;
@@ -19,7 +24,190 @@ body, html {
     overflow-x: hidden;
 }
 
-/* --- Layout Structure --- */
+/* =============================================================
+   LAYOUT STRUCTURE
+   ============================================================= */
+.dashboard-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: var(--sidebar-width);
+    /* This forces the exact same blue on every single page */
+    background-color: #3B82F6 !important; 
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 100;
+    /* Ensure there is no background image or overlay causing the "darkness" */
+    background-image: none !important;
+}
+
+.main-content {
+    margin-left: var(--sidebar-width);
+    flex: 1;
+    width: calc(100% - var(--sidebar-width));
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.content-area {
+    padding: 30px 40px;
+    max-width: 1300px;
+    margin: 0 auto;
+    flex: 1;
+}
+
+/* =============================================================
+   SIDEBAR & BRANDING
+   ============================================================= */
+.sidebar-brand { 
+    padding: 30px; 
+    display: flex; 
+    align-items: center; 
+    gap: 15px; 
+}
+
+.logo-box {
+    width: 45px; 
+    height: 45px; 
+    background: white; 
+    border-radius: 50%;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    color: var(--primary-blue); 
+    font-weight: bold; 
+    font-size: 1.2rem;
+}
+
+.brand-text { 
+    font-size: 1.4rem; 
+    font-weight: 700; 
+}
+
+.side-nav {
+    flex: 1; 
+    padding: 10px 20px;
+    overflow-y: auto;
+}
+
+.nav-item {
+    display: flex !important; 
+    align-items: center !important; 
+    gap: 15px !important; 
+    color: white !important;
+    text-decoration: none !important; 
+    padding: 14px 20px !important; /* Keeps height consistent */
+    border-radius: 12px !important;
+    margin-bottom: 8px !important; 
+    transition: 0.3s ease !important; 
+    opacity: 0.85 !important;
+    font-weight: 500 !important; /* Standardized weight */
+    font-size: 1rem !important;   /* Standardized size */
+}
+
+.nav-item {
+    background-color: transparent !important;
+    color: white !important;
+}
+
+.nav-item.active {
+    /* Use a slightly lighter blue for the active state so it pops */
+    background-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.sidebar-footer { 
+    padding: 30px; 
+}
+
+.logout-btn {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid white;
+    color: white;
+    padding: 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    
+    /* Centering Logic */
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centers text and icon horizontally */
+    gap: 10px;               /* Space between icon and text */
+    text-align: center;
+    transition: 0.3s ease;
+}
+
+.logout-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+/* =============================================================
+   TOP BAR (HEADER)
+   ============================================================= */
+header.top-bar {
+    background: white; 
+    padding: 15px 40px; 
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    border-bottom: 1px solid #eef2f6; 
+    position: sticky; 
+    top: 0; 
+    z-index: 90;
+}
+
+.header-title h2 { 
+    margin: 0; 
+    font-size: 1.1rem; 
+    color: var(--text-dark); 
+}
+
+.header-title p { 
+    margin: 2px 0 0; 
+    font-size: 0.8rem; 
+    color: #888; 
+}
+
+.header-user { 
+    display: flex; 
+    align-items: center; 
+    gap: 20px; 
+}
+
+.avatar {
+    width: 40px; 
+    height: 40px; 
+    background: #e0e0e0; 
+    border-radius: 50%;
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    font-weight: bold;
+}
+
+/* =============================================================
+   GLOBAL FOOTER
+   ============================================================= */
+.footer { 
+    background: white; 
+    text-align: center; 
+    padding: 15px; 
+    font-size: 0.85rem; 
+    color: #777; 
+    border-top: 1px solid #eef2f6; 
+}
+
+/* =============================================================
+   LAYOUT STRUCTURE (UPDATED FOR WIDTH)
+   ============================================================= */
 .dashboard-container {
     display: flex;
     min-height: 100vh;
@@ -41,273 +229,37 @@ body, html {
 .main-content {
     margin-left: var(--sidebar-width);
     flex: 1;
-    width: calc(100% - var(--sidebar-width));
+    /* Removed width calc to allow natural flex growth */
     display: flex;
     flex-direction: column;
     min-height: 100vh;
 }
 
 .content-area {
-    padding: 30px 40px;
-    max-width: 1300px;
+    padding: 30px 20px; /* Reduced side padding slightly */
+    max-width: 1600px;  /* INCREASED from 1300px */
+    width: 98%;        /* Use 98% of the available area */
     margin: 0 auto;
     flex: 1;
 }
 
-/* --- Sidebar Components --- */
-.sidebar-brand { padding: 30px; display: flex; align-items: center; gap: 15px; }
+/* Container for the logo */
 .logo-box {
-    width: 45px; height: 45px; background: white; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    color: var(--primary-blue); font-weight: bold; font-size: 1.2rem;
-}
-.brand-text { font-size: 1.4rem; font-weight: 700; }
-.side-nav { flex: 1; padding: 10px 20px; }
-.nav-item {
-    display: flex; align-items: center; gap: 15px; color: white;
-    text-decoration: none; padding: 14px 20px; border-radius: 12px;
-    margin-bottom: 8px; transition: 0.3s ease; opacity: 0.85;
-}
-.nav-item:hover, .nav-item.active { background: var(--nav-hover); opacity: 1; font-weight: 600; }
-.sidebar-footer { padding: 30px; }
-.logout-btn {
-    width: 100%; background: rgba(255,255,255,0.15); border: 1px solid white;
-    color: white; padding: 12px; border-radius: 10px; cursor: pointer; font-weight: 600;
-}
-
-/* --- Top Bar --- */
-header.top-bar {
-    background: white; padding: 15px 40px; display: flex;
-    justify-content: space-between; align-items: center;
-    border-bottom: 1px solid #eef2f6; position: sticky; top: 0; z-index: 90;
-}
-.header-title h2 { margin: 0; font-size: 1.1rem; color: var(--text-dark); }
-.header-title p { margin: 2px 0 0; font-size: 0.8rem; color: #888; }
-.header-user { display: flex; align-items: center; gap: 20px; }
-.avatar {
-    width: 40px; height: 40px; background: #e0e0e0; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center; font-weight: bold;
-}
-
-/* --- NEW: Facilities Page Specifics --- */
-.page-title { margin-bottom: 15px; color: var(--text-dark); }
-
-.search-bar input {
-    width: 100%; padding: 12px 18px; border-radius: 12px;
-    border: 1px solid #e0e6ed; background: white; margin-bottom: 20px; outline: none;
-}
-
-.filters { margin-bottom: 25px; display: flex; flex-wrap: wrap; gap: 10px; }
-.filter-btn {
-    padding: 10px 20px; border: none; border-radius: 25px;
-    cursor: pointer; background: #e0e6ed; font-weight: 600; font-size: 0.85rem; color: #666;
-}
-.filter-btn.active { background: var(--primary-blue); color: white; }
-
-.card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; }
-
-.facility-card {
-    border-radius: 20px; overflow: hidden; background: white;
-    box-shadow: 0 6px 15px rgba(0,0,0,.05); transition: .3s ease; border: 1px solid #eef2f6;
-}
-.facility-card:hover { transform: translateY(-8px); box-shadow: 0 12px 25px rgba(0,0,0,0.1); }
-.facility-img { width: 100%; height: 180px; object-fit: cover; }
-
-.book-btn {
-    margin-top: 15px; width: 100%; padding: 12px; border-radius: 12px;
-    border: none; background: var(--primary-blue); color: white;
-    font-weight: 700; cursor: pointer; transition: 0.3s;
-}
-.book-btn:hover { background: var(--purple-accent); }
-
-/* --- NEW: Modal Styles --- */
-body.modal-open > *:not(.modal) { filter: blur(6px); pointer-events: none; }
-.modal { position: fixed; inset: 0; display: none; justify-content: center; align-items: center; z-index: 999; background: rgba(0,0,0,0.3); }
-.modal-content {
-    width: 520px; background: white; border-radius: 20px; padding: 30px;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.2); animation: fadeIn 0.3s ease;
-}
-@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-.form-row { display: flex; gap: 12px; }
-input, textarea { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #e0e6ed; margin-bottom: 15px; outline: none; }
-.modal-buttons { display: flex; justify-content: flex-end; gap: 12px; margin-top: 10px; }
-.cancel-btn { background: #f5f7fb; border: 1px solid #ddd; padding: 10px 20px; border-radius: 10px; cursor: pointer; }
-.submit-btn { background: var(--primary-blue); color: white; border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer; font-weight: 600; }
-
-/* --- Home Dashboard Components --- */
-.welcome-banner { background-color: var(--primary-blue); color: white; padding: 40px; border-radius: 20px; margin-bottom: 30px; position: relative; }
-.stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; margin-bottom: 30px; }
-.stat-card { background: white; padding: 25px; border-radius: 15px; border: 1px solid #e0e6ed; }
-.panel { background-color: var(--primary-blue); padding: 35px; border-radius: 25px; margin-bottom: 30px; color: white; }
-.action-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
-.action-card { background: white; color: var(--text-dark); padding: 35px 20px; border-radius: 20px; text-align: center; }
-.res-item { background: white; color: var(--text-dark); padding: 25px 30px; border-radius: 20px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; }
-
-/* --- Footer --- */
-.footer { background: white; text-align: center; padding: 15px; font-size: 0.85rem; color: #777; border-top: 1px solid #eef2f6; }
-
-/* =============================================================
-   SECTION: MY RESERVATIONS (Kriszyle's Module)
-   ============================================================= */
-
-/*  Wrapper to prevent style leaks */
-.reservation-page {
-    font-family: 'DM Sans', sans-serif;
-    color: var(--text-dark);
-}
-
-/*  Navigation Tabs - Using Leader's Variables */
-.reservation-page .nav-tabs {
+    width: 45px;
+    height: 45px;
+    background-color: white; /* Keeps the white background circle */
+    border-radius: 50%;
     display: flex;
-    gap: 12px;
-    margin-bottom: 25px;
-    border-bottom: 1px solid #eef2f6;
-    padding-bottom: 10px;
-}
-
-.reservation-page .nav-tab {
-    padding: 10px 22px;
-    border-radius: 25px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: #666;
-    cursor: pointer;
-    transition: 0.3s;
-    border: none;
-    background: #e0e6ed;
-    text-decoration: none;
-}
-
-.reservation-page .nav-tab.active {
-    background: var(--primary-blue);
-    color: white;
-}
-
-.reservation-page .nav-tab:hover:not(.active) {
-    background: #d1d9e2;
-}
-
-/*  Reservation Cards */
-.reservation-page .card {
-    background: var(--white);
-    border-radius: 15px;
-    padding: 20px 25px;
-    display: flex;
-    justify-content: space-between;
     align-items: center;
-    border: 1px solid #eef2f6;
-    margin-bottom: 15px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
-    transition: 0.3s ease;
-}
-
-.reservation-page .card:hover {
-    transform: translateX(8px);
-    border-color: var(--primary-blue);
-    box-shadow: 0 6px 15px rgba(0,0,0,0.08);
-}
-
-.reservation-page .card-info {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-
-.reservation-page .card-title {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--text-dark);
-}
-
-.reservation-page .card-meta {
-    display: flex;
-    gap: 20px;
-    font-size: 0.85rem;
-    color: #888;
-}
-
-/*  Status Badges */
-.reservation-page .badge {
-    padding: 5px 12px;
-    border-radius: 20px;
-    font-size: 0.7rem;
-    font-weight: 700;
-    text-transform: uppercase;
-}
-
-.reservation-page .badge-approved { background: #e8f5e9; color: #2e7d32; }
-.reservation-page .badge-pending { background: #fffde7; color: #f9a825; }
-.reservation-page .badge-cancelled { background: #ffebee; color: #c62828; }
-
-/*  Custom Modals for this Page */
-.reservation-page .overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.4);
-    backdrop-filter: blur(4px);
-    display: none;
     justify-content: center;
-    align-items: center;
-    z-index: 2000;
+    overflow: hidden; /* Ensures the image doesn't bleed out of the circle */
+    flex-shrink: 0;
 }
 
-.reservation-page .overlay.active { display: flex; }
-
-.reservation-page .modal-box {
-    background: white;
-    width: 480px;
-    border-radius: 20px;
-    padding: 30px;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.2);
-    animation: slideIn 0.3s ease;
+/* The actual image */
+.brand-logo {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Use 'cover' if you want it to fill the whole circle */
+    padding: 2px; /* Optional: adds a little breathing room inside the circle */
 }
-
-@keyframes slideIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/*  Detail Rows (View Details) */
-.reservation-page .detail-row {
-    display: flex;
-    gap: 15px;
-    margin-bottom: 18px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #f8f9fa;
-}
-
-.reservation-page .detail-label {
-    font-size: 0.7rem;
-    color: #888;
-    text-transform: uppercase;
-    font-weight: 700;
-}
-
-.reservation-page .detail-value {
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: var(--text-dark);
-}
-
-/*  Buttons */
-.reservation-page .btn-group { display: flex; gap: 10px; }
-
-.reservation-page .btn-action {
-    padding: 8px 16px;
-    border-radius: 10px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    cursor: pointer;
-    border: none;
-    transition: 0.2s;
-}
-
-.reservation-page .btn-view { background: #f0f4f8; color: #444; }
-.reservation-page .btn-view:hover { background: #e2e8f0; }
-
-.reservation-page .btn-cancel { background: #fee2e2; color: #dc2626; }
-.reservation-page .btn-cancel:hover { background: #fecaca; }
-
-/* =============================================================
-   END OF KRISZYLE'S SECTION
-   ============================================================= */

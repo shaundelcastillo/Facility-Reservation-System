@@ -17,16 +17,21 @@ class RedirectIfAuthenticated
      * @param  string|null  ...$guards
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
-    public function handle(Request $request, Closure $next, ...$guards)
-    {
-        $guards = empty($guards) ? [null] : $guards;
+ public function handle($request, \Closure $next, ...$guards)
+{
+    $guards = empty($guards) ? [null] : $guards;
 
-        foreach ($guards as $guard) {
-            if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
+    foreach ($guards as $guard) {
+        if (auth()->guard($guard)->check()) {
+            // This is the logic that separates Admin from User
+            if (auth()->user()->role === 'admin') {
+                return redirect()->route('admin.home');
             }
+            
+            // This is where standard users go
+            return redirect('/home'); 
         }
-
-        return $next($request);
     }
+
+    return $next($request);
 }

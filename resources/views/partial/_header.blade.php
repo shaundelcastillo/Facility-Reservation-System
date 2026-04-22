@@ -1,13 +1,15 @@
 <header class="top-bar">
     <div class="header-title">
-        <h2>School Facility Reservation System</h2>
+        <h2>Facility Reservation System</h2>
         <p>Book rooms and facilities easily</p>
     </div>
     <div class="header-user">
         <div class="user-details">
-            <span class="name">Juan Dela Cruz</span>
-            <span class="id">2022-12345</span>
+            {{-- This pulls your real name and Student ID from the database --}}
+            <span class="name">{{ Auth::user()->name }}</span>
+            <span class="id">{{ Auth::user()->student_id }}</span>
         </div>
-        <div class="avatar">JD</div>
+        {{-- This small snippet gets the first letter of your name for the avatar --}}
+        <div class="avatar">{{ strtoupper(substr(Auth::user()->name, 0, 1)) }}</div>
     </div>
 </header>

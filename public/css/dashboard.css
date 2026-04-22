@@ -1,0 +1,233 @@
+/* --- Home Dashboard Components --- */
+/* --- Home Dashboard Components (UPDATED FOR WIDTH) --- */
+.welcome-banner { 
+    background-color: var(--primary-blue); 
+    color: white; 
+    padding: 60px 50px; /* INCREASED padding for wider look */
+    border-radius: 20px; 
+    margin-bottom: 30px; 
+    position: relative; 
+    width: 100%;
+}
+
+.stats-grid { 
+    display: grid; 
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 30px; /* Increased gap */
+    margin-bottom: 30px; 
+}
+
+.stat-card { 
+    background: white; 
+    padding: 30px; /* Increased padding */
+    border-radius: 15px; 
+    border: 1px solid #e0e6ed; 
+}
+
+.panel { 
+    background-color: var(--primary-blue); 
+    padding: 40px; /* Increased padding */
+    border-radius: 25px; 
+    margin-bottom: 30px; 
+    color: white; 
+    width: 100%;
+}
+
+.res-item { 
+    background: white; 
+    color: var(--text-dark); 
+    padding: 25px 40px; /* Wider horizontal padding */
+    border-radius: 20px; 
+    margin-bottom: 15px; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+}
+
+.action-grid { 
+    display: grid; 
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 25px; 
+}
+
+.action-card { 
+    background: white; 
+    color: var(--text-dark); 
+    padding: 35px 20px; 
+    border-radius: 20px; 
+    text-align: center; 
+}
+
+.res-item { 
+    background: white; 
+    color: var(--text-dark); 
+    padding: 25px 30px; 
+    border-radius: 20px; 
+    margin-bottom: 15px; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+}
+
+/* Browse Button - Benedicto College Colors */
+.btn-browse {
+    display: inline-block;
+    background: white;
+    color: #3182ce; /* Match your primary blue */
+    padding: 12px 28px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 700;
+    margin-top: 15px;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.btn-browse:hover {
+    background: #f7fafc;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Action Cards - Making them look like buttons */
+.action-card {
+    text-decoration: none;
+    display: block;
+    transition: transform 0.2s ease;
+}
+
+.action-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Recent Reservation Buttons */
+.btn-detail {
+    background: #edf2f7;
+    color: #4a5568;
+    padding: 8px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.btn-cancel {
+    background: #fff5f5;
+    color: #c53030;
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: 1px solid #feb2b2;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-view-all {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid white;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* Status Badge Styling */
+.badge {
+    padding: 4px 12px;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    display: inline-block;
+    margin-left: 10px;
+}
+
+/* Approved - Green Theme */
+.badge.approved {
+    background-color: #c6f6d5;
+    color: #22543d;
+    border: 1px solid #9ae6b4;
+}
+
+/* Pending - Yellow/Orange Theme */
+.badge.pending {
+    background-color: #feebc8;
+    color: #744210;
+    border: 1px solid #fbd38d;
+}
+
+/* Rejected - Red Theme */
+.badge.rejected {
+    background-color: #fed7d7;
+    color: #822727;
+    border: 1px solid #feb2b2;
+}
+
+/* Recent Reservation Buttons - Updated with Hovers */
+.res-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.btn-detail {
+    background: #edf2f7;
+    color: #4a5568;
+    padding: 10px 18px; /* Slightly larger for better clickability */
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 700;
+    border: 1px solid #e2e8f0;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-detail:hover {
+    background: #e2e8f0;
+    color: #2d3748;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.btn-detail:active {
+    transform: translateY(0);
+}
+
+.btn-cancel {
+    background: #fff5f5;
+    color: #c53030;
+    padding: 10px 18px;
+    border-radius: 8px;
+    border: 1px solid #feb2b2;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-cancel:hover {
+    background: #feb2b2;
+    color: #9b2c2c;
+    border-color: #fc8181;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(197, 48, 48, 0.1);
+}
+
+.btn-cancel:active {
+    transform: translateY(0);
+}
+
+/* View All Link Hover */
+.btn-view-all:hover {
+    background: white;
+    color: var(--primary-blue);
+    transform: translateY(-1px);
+}

@@ -1,0 +1,182 @@
+:root {
+    --primary-blue: #3b82f6; /* Benedicto College Blue */
+    --text-dark: #1f2937;
+    --bg-light: #f3f4f6;
+}
+
+.page-title { margin-bottom: 15px; color: var(--text-dark); }
+
+.search-bar input {
+    width: 100%; padding: 12px 18px; border-radius: 12px;
+    border: 1px solid #e0e6ed; background: white; margin-bottom: 20px; outline: none;
+}
+
+.filters { margin-bottom: 25px; display: flex; flex-wrap: wrap; gap: 10px; }
+.filter-btn {
+    padding: 10px 20px; border: none; border-radius: 25px;
+    cursor: pointer; background: #e0e6ed; font-weight: 600; font-size: 0.85rem; color: #666;
+}
+.filter-btn.active { background: var(--primary-blue); color: white; }
+
+/* Update these specific parts in your facilities.css */
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px 0;
+}
+
+.facility-card {
+    display: flex;
+    flex-direction: column;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    height: 100%; /* Important: Keeps cards in the same row the same height */
+}
+
+.facility-img {
+    width: 100%;
+    height: 200px; /* Fixed height for consistency */
+    object-fit: cover; /* Prevents stretching */
+    display: block;
+}
+
+.card-body {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    flex: 1; /* This is the fix! It forces the body to grow and fill the card */
+}
+
+.book-btn {
+    margin-top: auto; 
+    background-color: var(--primary-blue);
+    padding: 10px;
+    border-radius: 8px;
+    color: white;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+    width: 100%; /* Added to ensure it fills the width */
+}
+
+/* --- Modal Styles --- */
+body.modal-open > *:not(.modal) { filter: blur(6px); pointer-events: none; }
+.modal { position: fixed; inset: 0; display: none; justify-content: center; align-items: center; z-index: 999; background: rgba(0,0,0,0.3); }
+.modal-content {
+    width: 520px; background: white; border-radius: 20px; padding: 30px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+}
+
+.room-info-pill {
+    background: #e0e0e0;
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+.form-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.form-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+}
+
+.form-group input, .form-group textarea {
+    padding: 10px;
+    border: 1.5px solid #ccc;
+    border-radius: 8px;
+    background: #f9f9f9;
+}
+
+.btn-submit {
+    background: #7d70fa; /* Match your primary purple */
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-cancel {
+    background: white;
+    border: 1.5px solid #ccc;
+    padding: 12px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* Background Blur Overlay */
+.modal-overlay {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(255, 255, 255, 0.2); /* Semi-transparent */
+    backdrop-filter: blur(8px); /* The Blur Effect */
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: white;
+    width: 90%;
+    max-width: 500px;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.room-pill {
+    background: #f0f0f0;
+    padding: 12px;
+    border-radius: 10px;
+    margin: 15px 0;
+    display: flex;
+    justify-content: space-around;
+    font-size: 0.9rem;
+}
+
+.form-row { display: flex; gap: 15px; }
+.form-group { flex: 1; margin-bottom: 15px; display: flex; flex-direction: column; }
+.form-group label { font-weight: bold; margin-bottom: 5px; font-size: 0.85rem; }
+.form-group input, .form-group textarea {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; }
+.btn-primary { background: #7d70fa; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; }
+.btn-secondary { background: #eee; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; }
+
+/* Explicit styles to make the alert visible */
+.alert-success {
+    display: block !important;
+    background-color: #28a745 !important;
+    color: #ffffff !important;
+    padding: 20px !important;
+    margin: 20px 0 !important;
+    border-radius: 8px !important;
+    text-align: center !important;
+    position: relative !important;
+    z-index: 1000 !important;
+}

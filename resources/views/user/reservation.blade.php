@@ -1,72 +1,65 @@
-<div class="reservation-page">
-    <div class="header">
+@extends('layout.app')
+
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('css/reservation.css') }}?v={{ time() }}">
+@endpush
+
+@section('content')
+<div class="main-container">
+    <div class="blue-header-box">
         <h1>My Reservations</h1>
         <p>View and manage all your facility reservations</p>
     </div>
 
-    <div class="nav-tabs">
-        <a href="{{ url('/facilities') }}" class="nav-tab">Facilities</a>
-        <a href="{{ url('/my-reservations') }}" class="nav-tab active">My Reservations</a>
-        <a href="{{ url('/calendar') }}" class="nav-tab">Calendar</a>
-    </div>
-
-    <div class="main" id="reservationList">
-        </div>
-
-    <div class="overlay" id="viewOverlay">
-        <div class="modal-box">
-            <div class="modal-header">
-                <span class="modal-title">Reservation Details</span>
-                <button class="modal-close" onclick="window.closeAll()">✕</button>
-            </div>
-            <div class="modal-body">
-                <div class="detail-row">
-                    <div class="detail-icon">🏢</div>
-                    <div>
-                        <div class="detail-label">Facility</div>
-                        <div class="detail-value" id="v-facility"></div>
+    <div class="reservations-list">
+        @forelse($reservations as $res)
+            <div class="card" id="res-{{ $res->reservation_id }}">
+                <div class="card-content">
+                    <div class="card-header">
+                        <h2>{{ $res->room->room_number ?? 'Unknown Facility' }}</h2>
+                        <span class="badge {{ strtolower($res->status) }}">{{ ucfirst($res->status) }}</span>
                     </div>
-                    <div style="margin-left:auto" id="v-badge"></div>
-                </div>
-                <div class="detail-row">
-                    <div class="detail-icon">📅</div>
-                    <div>
-                        <div class="detail-label">Date & Time</div>
-                        <div class="detail-value" id="v-datetime"></div>
+                    <div class="details">
+                        <p><i class="fa-regular fa-calendar"></i> {{ \Carbon\Carbon::parse($res->start_time)->format('F j, Y') }}</p>
+                        <p><i class="fa-regular fa-file-lines"></i> <strong>Purpose:</strong> {{ $res->purpose ?? 'No purpose provided' }}</p>
+                        <p><i class="fa-solid fa-location-dot"></i> <strong>Reserved by:</strong> {{ Auth::user()->name }}</p>
                     </div>
                 </div>
-                <div class="detail-row">
-                    <div class="detail-icon">🎯</div>
-                    <div>
-                        <div class="detail-label">Purpose</div>
-                        <div class="detail-value" id="v-purpose"></div>
+                <div class="card-right">
+                    <div class="time">
+                        <i class="fa-regular fa-clock"></i> 
+                        {{ \Carbon\Carbon::parse($res->start_time)->format('g:i A') }} - 
+                        {{ \Carbon\Carbon::parse($res->end_time)->format('g:i A') }}
+                    </div>
+                    <div class="actions">
+                        {{-- Updated to pass full data object --}}
+                        <button class="btn-view" 
+                            onclick="handleView({
+                                status: '{{ $res->status }}',
+                                facility: '{{ $res->room->room_number }}',
+                                date: '{{ \Carbon\Carbon::parse($res->start_time)->format('l, F j, Y') }}',
+                                time: '{{ \Carbon\Carbon::parse($res->start_time)->format('g:i A') }} - {{ \Carbon\Carbon::parse($res->end_time)->format('g:i A') }}',
+                                user: '{{ Auth::user()->name }}',
+                                purpose: '{{ addslashes($res->purpose) }}'
+                            })">
+                            <i class="fa-regular fa-eye"></i> View Details
+                        </button>
+
+                        <button class="btn-cancel" onclick="handleCancel('{{ $res->reservation_id }}')">
+                            <i class="fa-regular fa-trash-can"></i> Cancel
+                        </button>
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button class="btn-action btn-view" onclick="window.closeAll()">Close</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="overlay" id="cancelOverlay">
-        <div class="modal-box">
-            <div class="modal-header">
-                <span class="modal-title">Cancel Reservation</span>
-                <button class="modal-close" onclick="window.closeAll()">✕</button>
-            </div>
-            <div class="modal-body">
-                <div class="cancel-warning">
-                    ⚠️ Are you sure you want to cancel this reservation for
-                    <strong id="c-facility"></strong>? This action cannot be undone.
+        @empty
+            <div class="card">
+                <div class="card-content" style="text-align: center; padding: 40px;">
+                    <p style="color: #666;">You have no reservations yet.</p>
                 </div>
-                <div class="cancel-label">Reason for cancellation (optional)</div>
-                <textarea class="cancel-reason" id="cancelReason" rows="3" placeholder="Enter reason..."></textarea>
             </div>
-            <div class="modal-footer">
-                <button class="btn-action btn-view" onclick="window.closeAll()">Keep Reservation</button>
-                <button class="btn-action btn-cancel" onclick="window.confirmCancel()">Cancel Reservation</button>
-            </div>
-        </div>
+        @endforelse
     </div>
 </div>
+
+@include('user.modals')
+@endsection

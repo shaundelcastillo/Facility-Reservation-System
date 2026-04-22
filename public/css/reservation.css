@@ -1,0 +1,204 @@
+/* Change this: Remove the flex and padding from body */
+body {
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    background-color: #f4f7f6; /* Match your school dashboard bg */
+    margin: 0;
+}
+
+/* Update this: Make the container fit inside your dashboard content area */
+.main-container {
+    width: 95%;
+    max-width: 100%;
+    margin: 20px auto; /* Centers it within the dashboard area */
+    background: linear-gradient(180deg, #64b5f6 0%, #2196f3 100%);
+    padding: 30px;
+    border-radius: 30px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+}
+
+.blue-header-box {
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(5px);
+    padding: 25px;
+    border-radius: 20px;
+    color: white;
+    margin-bottom: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.blue-header-box h1 { margin: 0; font-size: 24px; }
+.blue-header-box p { margin: 8px 0 0; opacity: 0.95; font-size: 15px; }
+
+.reservations-list {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.card {
+    background: white;
+    border-radius: 28px;
+    padding: 25px 35px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: transform 0.2s ease;
+}
+
+.card:hover { transform: translateY(-2px); }
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 12px;
+}
+
+.card-header h2 { margin: 0; font-size: 20px; color: #333; }
+
+.badge {
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.approved { background-color: #c8e6c9; color: #2e7d32; }
+.pending { background-color: #fff9c4; color: #f57f17; }
+
+.details p {
+    margin: 8px 0;
+    font-size: 14px;
+    color: #555;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.details i { width: 18px; color: #777; font-size: 16px; }
+
+.card-right {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 20px;
+}
+
+.time {
+    font-size: 15px;
+    font-weight: 500;
+    color: #444;
+}
+
+.actions {
+    display: flex;
+    gap: 12px;
+}
+
+button {
+    padding: 10px 18px;
+    border-radius: 12px;
+    border: 1px solid #e0e0e0;
+    background: white;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: 0.2s;
+}
+
+.btn-view:hover { background-color: #f8f9fa; border-color: #2196f3; color: #2196f3; }
+.btn-cancel:hover { background-color: #fff5f5; border-color: #ff5252; color: #ff5252; }
+
+/* --- MODAL SYSTEM --- */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(2px);
+    z-index: 1000;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    width: 90%;
+    max-width: 480px;
+    border-radius: 24px;
+    z-index: 1001;
+    padding: 30px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.close-btn {
+    background: none; border: none; font-size: 28px; cursor: pointer; color: #999;
+}
+
+/* View Modal Styling */
+.status-row { display: flex; justify-content: space-between; margin-bottom: 20px; color: #888; font-size: 14px; }
+.info-section { margin-bottom: 20px; }
+.section-title { font-weight: 600; font-size: 14px; margin-bottom: 12px; display: flex; gap: 10px; color: #333; }
+.info-grid { display: grid; grid-template-columns: 1fr 1fr; font-size: 13px; gap: 8px; padding-left: 28px; }
+.label { color: #aaa; }
+.value { color: #333; font-weight: 600; text-align: right; }
+
+/* Cancel Modal Styling */
+.modal-desc { font-size: 14px; color: #666; line-height: 1.5; margin-bottom: 20px; }
+.input-label { display: block; font-weight: 600; font-size: 14px; margin-bottom: 8px; }
+textarea {
+    width: 100%; height: 120px; padding: 15px; border-radius: 15px;
+    border: 1px solid #ddd; background: #f8f9fa; resize: none; box-sizing: border-box; font-family: inherit;
+}
+.input-hint { font-size: 12px; color: #999; margin-top: 8px; }
+
+.modal-footer { display: flex; gap: 12px; margin-top: 30px; justify-content: flex-end; }
+
+.btn-keep { border: 1px solid #ccc; color: #444; background: white; padding: 10px 20px; border-radius: 12px; cursor: pointer;}
+.btn-confirm-cancel { background: #ff5252; color: white; border: none; padding: 10px 20px; border-radius: 12px; cursor: pointer; font-weight: 600;}
+.btn-confirm-cancel:disabled { background: #ff5e5e; cursor: not-allowed; }
+
+/* Status Badge Styling */
+.badge {
+    padding: 4px 12px;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    display: inline-block;
+    margin-left: 10px;
+}
+
+/* Approved - Green Theme */
+.badge.approved {
+    background-color: #c6f6d5;
+    color: #22543d;
+    border: 1px solid #9ae6b4;
+}
+
+/* Pending - Yellow/Orange Theme */
+.badge.pending {
+    background-color: #feebc8;
+    color: #744210;
+    border: 1px solid #fbd38d;
+}
+
+/* Rejected - Red Theme */
+.badge.rejected {
+    background-color: #fed7d7;
+    color: #822727;
+    border: 1px solid #feb2b2;
+}
