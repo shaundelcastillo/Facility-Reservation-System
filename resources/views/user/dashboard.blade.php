@@ -1,7 +1,7 @@
 @extends('layout.app')
 
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}?v={{ time() }}">
 @endpush
 
 @section('content')
@@ -18,59 +18,48 @@
         <div class="stat-card"><h3>Approved</h3><span class="num">{{ $approved }}</span></div>
     </section>
 
-    <section class="panel">
-        <div class="panel-header">
-            <h3>Quick Actions</h3>
-            <p>Get started with these common tasks</p>
-        </div>
-        <div class="action-grid">
-            <a href="{{ route('facilities') }}" class="action-card"><i class="fas fa-building"></i><h4>Book a facility</h4></a>
-            <a href="{{ route('reservation') }}" class="action-card"><i class="fas fa-clipboard-list"></i><h4>View my reservation</h4></a>
-            <a href="{{ route('calendar') }}" class="action-card"><i class="fas fa-calendar-check"></i><h4>Check your calendar</h4></a>
-        </div>
-    </section>
-
-    @if($recent)
+    @if($recentReservation)
     <section class="panel">
         <div class="panel-header">
             <h3>Recent Reservations</h3>
             <p>Your latest booking reservation.</p>
         </div>
 
-        <div class="res-item">
+        <div class="res-item" id="res-{{ $recentReservation->reservation_id }}">
             <div class="res-left">
                 <div>
-                    <span class="res-title">{{ $recent->room->room_number }}</span>
-                    <span class="badge {{ $recent->status }}">{{ ucfirst($recent->status) }}</span>
+                    <span class="res-title">{{ $recentReservation->room->room_number }}</span>
+                    <span class="badge {{ $recentReservation->status }}">{{ ucfirst($recentReservation->status) }}</span>
                 </div>
                 <div class="res-info-grid">
-                    <span><i class="far fa-calendar-alt"></i> {{ \Carbon\Carbon::parse($recent->start_time)->format('F d, Y') }}</span>
-                    <span><i class="fas fa-info-circle"></i> Purpose: {{ $recent->purpose }}</span>
-                    <span><i class="fas fa-user"></i> Reserved by: {{ Auth::user()->name }}</span>
+                    <p><span><i class="far fa-calendar-alt"></i> {{ \Carbon\Carbon::parse($recentReservation->start_time)->format('F d, Y') }}</span></p>
+                    <p><span><i class="fas fa-info-circle"></i> Purpose: {{ $recentReservation->purpose }}</span></p>
+                    <p><span><i class="fas fa-user"></i> Reserved by: {{ Auth::user()->name }}</span></p>
                 </div>
             </div>
             <div class="res-right">
-                <div class="res-time"><i class="far fa-clock"></i> {{ \Carbon\Carbon::parse($recent->start_time)->format('h:i A') }} - {{ \Carbon\Carbon::parse($recent->end_time)->format('h:i A') }}</div>
+                <div class="res-time"><i class="far fa-clock"></i> 
+                    <span class="time">{{ \Carbon\Carbon::parse($recentReservation->start_time)->format('h:i A') }} - {{ \Carbon\Carbon::parse($recentReservation->end_time)->format('h:i A') }}</span>
+                </div>
                 <div class="res-actions">
-                    {{-- Updated to use Universal View Function --}}
+                    {{-- Updated to pass full data object --}}
                     <button type="button" class="btn-detail" 
                         onclick="handleView({
-                            status: '{{ ucfirst($recent->status) }}',
-                            facility: '{{ $recent->room->room_number }}',
-                            date: '{{ \Carbon\Carbon::parse($recent->start_time)->format('F d, Y') }}',
-                            time: '{{ \Carbon\Carbon::parse($recent->start_time)->format('h:i A') }} - {{ \Carbon\Carbon::parse($recent->end_time)->format('h:i A') }}',
+                            status: '{{ $recentReservation->status }}',
+                            facility: '{{ $recentReservation->room->room_number }}',
+                            date: '{{ \Carbon\Carbon::parse($recentReservation->start_time)->format('l, F j, Y') }}',
+                            time: '{{ \Carbon\Carbon::parse($recentReservation->start_time)->format('g:i A') }} - {{ \Carbon\Carbon::parse($recentReservation->end_time)->format('g:i A') }}',
                             user: '{{ Auth::user()->name }}',
-                            purpose: '{{ $recent->purpose }}'
-                        })">View Details</button>
-
-                    {{-- Updated to use Universal Cancel Function --}}
-                    <button type="button" class="btn-cancel" 
-                        onclick="handleCancel('{{ route('reservation.destroy', $recent->reservation_id ?? $recent->id) }}')">
-                        Cancel
+                            purpose: '{{ addslashes($recentReservation->purpose) }}'
+                        })">
+                        View Details
                     </button>
+                    <button type="button" class="btn-cancel" onclick="handleCancel('{{ $recentReservation->reservation_id }}')">Cancel</button>
                 </div>
             </div>
         </div>
     </section>
     @endif
+
+    @include('user.modals') 
 @endsection

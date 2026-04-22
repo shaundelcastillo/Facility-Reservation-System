@@ -34,7 +34,7 @@
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    height: 100%; /* Ensures all cards are same height */
+    height: 100%; /* Important: Keeps cards in the same row the same height */
 }
 
 .facility-img {
@@ -48,11 +48,11 @@
     padding: 15px;
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
+    flex: 1; /* This is the fix! It forces the body to grow and fill the card */
 }
 
 .book-btn {
-    margin-top: auto; /* Pushes button to the bottom of the card */
+    margin-top: auto; 
     background-color: var(--primary-blue);
     padding: 10px;
     border-radius: 8px;
@@ -60,6 +60,7 @@
     text-align: center;
     border: none;
     cursor: pointer;
+    width: 100%; /* Added to ensure it fills the width */
 }
 
 /* --- Modal Styles --- */

@@ -199,3 +199,223 @@ body { background-color: var(--bg-light); color: #333; }
 
 .btn-cancel { background: #ff5e5e; color: white; } /* Red for cancel/logout */
 .btn-confirm { background: #2ecc71; color: white; }
+
+/* Position actions in the lower right of the card */
+.facility-card {
+    background: #4facfe;
+    color: white;
+    padding: 18px;
+    border-radius: 18px;
+    position: relative;
+    box-shadow: 0 8px 15px rgba(79, 172, 254, 0.2);
+    height: 250px;      /* Matches the original compact size */
+    display: flex;
+    flex-direction: column;
+}
+
+.facility-card h3 {
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+}
+
+.facility-card p {
+    font-size: 12px;
+    opacity: 0.9;
+    margin-bottom: 12px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    height: 32px; /* Keeps text area small and consistent */
+}
+
+.tag-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;           /* Subtle spacing between items */
+    margin-top: 12px;
+    height: 70px;       /* Fixed area to prevent the card from shifting */
+    align-content: flex-start; 
+    overflow: hidden;
+}
+
+.facility-tag {
+    background: rgba(255, 255, 255, 0.15); /* Soft glass effect */
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 10px;
+    padding: 6px 12px;  /* Padding makes it look like a natural pill/tag */
+    border-radius: 6px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    display: inline-block;
+}
+
+.card-footer-layout {
+    margin-top: auto; 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.card-actions {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    align-items: center;
+}
+
+.card-actions form {
+    margin: 0;
+    display: flex;
+}
+
+.btn-action i {
+    font-size: 14px;
+    pointer-events: none;
+}
+
+
+.btn-action.edit {
+    background: rgba(255, 255, 255, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.btn-action.edit:hover {
+    background: white;
+    color: #4facfe;
+}
+
+.btn-action.delete {
+    background: #ff5e5e;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.btn-action.delete:hover {
+    background: #e74c3c;
+    transform: translateY(-2px);
+}
+
+/* Delete Modal Specifics */
+.delete-modal {
+    text-align: center;
+    padding: 30px !important;
+    width: 350px !important;
+}
+
+.warning-icon {
+    font-size: 60px;
+    color: #ff5e5e;
+    margin-bottom: 15px;
+}
+
+.delete-modal h3 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.delete-modal p {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 25px;
+}
+
+.btn-confirm-delete {
+    background: #ff5e5e;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-confirm-delete:hover {
+    background: #e74c3c;
+}
+
+/* MODERN EDIT MODAL STYLES */
+.edit-facility-modal {
+    width: 500px !important; /* Slightly wider for the two-column row */
+    border-radius: 20px !important;
+    overflow: hidden;
+}
+
+.modern-form .form-body {
+    padding: 25px;
+}
+
+.form-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.form-row .form-group {
+    flex: 1;
+    margin-bottom: 0;
+}
+
+.modern-form .form-group {
+    margin-bottom: 20px;
+}
+
+.modern-form label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #4facfe;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.modern-form input, 
+.modern-form textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #f0f4f8;
+    border-radius: 12px;
+    background: #fcfdfe;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.modern-form input:focus, 
+.modern-form textarea:focus {
+    border-color: #4facfe;
+    background: #fff;
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(79, 172, 254, 0.1);
+}
+
+/* Update this specific class in adminfacilities.css */
+.btn-update-facility {
+    /* --- NEW/UPDATED PROPERTIES --- */
+    width: auto;             /* Changes from 100% to auto width */
+    padding: 12px 30px;      /* Slightly reduced height, standard width */
+    margin: 0 auto;          /* Centers the button in the footer */
+    display: block;          /* Allows margin auto to work */
+
+    /* --- KEEP THESE EXISTING PROPERTIES --- */
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(79, 172, 254, 0.3);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+/* Also ensure your footer handles the centering correctly */
+.modal-footer-action {
+    padding: 0 25px 25px 25px;
+    text-align: center; /* Centers inline block elements */
+}
