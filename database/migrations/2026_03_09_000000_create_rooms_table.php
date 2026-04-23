@@ -13,9 +13,14 @@ return new class extends Migration
             $table->string('room_number');
             $table->integer('capacity');
             
-            // These link to the two tables above
-            $table->foreignId('building_id')->constrained('buildings', 'building_id');
-            $table->foreignId('roomtype_id')->constrained('room_type', 'roomtype_id');
+            // Updated: Added nullable() so these aren't required during 'Create'
+            $table->foreignId('building_id')
+                  ->nullable() 
+                  ->constrained('buildings', 'building_id');
+
+            $table->foreignId('roomtype_id')
+                  ->nullable() 
+                  ->constrained('room_type', 'roomtype_id');
             
             $table->string('is_available')->default('Yes'); 
             $table->timestamps();

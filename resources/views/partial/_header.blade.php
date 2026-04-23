@@ -1,6 +1,6 @@
 <header class="top-bar">
     <div class="header-title">
-        <h2>School Facility Reservation System</h2>
+        <h2>Facility Reservation System</h2>
         <p>Book rooms and facilities easily</p>
     </div>
     <div class="header-user">

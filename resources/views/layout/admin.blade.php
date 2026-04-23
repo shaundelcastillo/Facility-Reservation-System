@@ -7,6 +7,7 @@
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('css/adminhome.css') }}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     @yield('extra-css')
 </head>
 <body>
@@ -38,7 +39,10 @@
         </div>
         <div class="user-actions">
             <button class="btn-admin"><i class='bx bx-shield-quarter'></i> Admin User</button>
-            <button class="btn-logout" id="logoutBtn"><i class='bx bx-log-out'></i> Logout</button>
+            
+            <button class="btn-logout" id="logoutBtn" onclick="forceLogout(event)">
+                <i class='bx bx-log-out'></i> Logout
+            </button>
         </div>
     </header>
 
@@ -54,7 +58,7 @@
                <i class='bx bx-calendar-event'></i> Reservations
             </a>
             
-            <a href="{{ route('admin.adminfacilities') }}" 
+            <a href="{{ route('admin.facilities') }}" 
                class="nav-item {{ Route::is('admin.facilities') ? 'active' : '' }}">
                <i class='bx bx-building-house'></i> Facilities
             </a>
@@ -65,7 +69,71 @@
         @yield('content')
     </main>
 
+    <script>
+        function forceLogout(e) {
+            if (e) e.preventDefault();
+            const modal = document.getElementById('confirmModal');
+            if (modal) {
+                modal.style.display = 'flex';
+            } else {
+                // If the modal is missing or script fails, use the browser default
+                if(confirm('Are you sure you want to log out?')) {
+                    document.getElementById('logout-form').submit();
+                }
+            }
+        }
+    </script>
+
     <script src="{{ asset('js/shared-admin.js') }}"></script>
     @yield('extra-js')
+
+    <script>
+    // 1. Function to open the modal
+    function forceLogout(e) {
+        if (e) e.preventDefault();
+        const modal = document.getElementById('confirmModal');
+        if (modal) {
+            modal.style.display = 'flex';
+        } else {
+            // Emergency fallback if modal is missing from HTML
+            if(confirm('Are you sure you want to log out?')) {
+                document.getElementById('logout-form').submit();
+            }
+        }
+    }
+
+    // 2. Set up the button actions once the page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        const modalConfirmBtn = document.getElementById('modalConfirmBtn');
+        const cancelLogout = document.getElementById('cancelLogout');
+        const confirmModal = document.getElementById('confirmModal');
+        const logoutForm = document.getElementById('logout-form');
+
+        // Confirm button: Submit the hidden form
+        if (modalConfirmBtn) {
+            modalConfirmBtn.onclick = function() {
+                if (logoutForm) {
+                    logoutForm.submit();
+                }
+            };
+        }
+
+        // Cancel button: Hide the modal
+        if (cancelLogout) {
+            cancelLogout.onclick = function() {
+                if (confirmModal) {
+                    confirmModal.style.display = 'none';
+                }
+            };
+        }
+
+        // Background click: Hide the modal
+        window.onclick = function(event) {
+            if (event.target === confirmModal) {
+                confirmModal.style.display = 'none';
+            }
+        };
+    });
+</script>
 </body>
 </html>

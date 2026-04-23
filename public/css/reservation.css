@@ -171,3 +171,34 @@ textarea {
 .btn-confirm-cancel { background: #ff5252; color: white; border: none; padding: 10px 20px; border-radius: 12px; cursor: pointer; font-weight: 600;}
 .btn-confirm-cancel:disabled { background: #ff5e5e; cursor: not-allowed; }
 
+/* Status Badge Styling */
+.badge {
+    padding: 4px 12px;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    display: inline-block;
+    margin-left: 10px;
+}
+
+/* Approved - Green Theme */
+.badge.approved {
+    background-color: #c6f6d5;
+    color: #22543d;
+    border: 1px solid #9ae6b4;
+}
+
+/* Pending - Yellow/Orange Theme */
+.badge.pending {
+    background-color: #feebc8;
+    color: #744210;
+    border: 1px solid #fbd38d;
+}
+
+/* Rejected - Red Theme */
+.badge.rejected {
+    background-color: #fed7d7;
+    color: #822727;
+    border: 1px solid #feb2b2;
+}

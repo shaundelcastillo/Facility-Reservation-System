@@ -1,45 +1,88 @@
 'use strict';
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Shared variable to store which URL we are about to delete
     let pendingDeleteUrl = "";
 
-    // 1. GLOBAL MODAL CONTROLS
-    window.closeUniModal = function(modalId) {
-        document.getElementById(modalId).style.display = 'none';
+    // Unified Close Function for Details Modal
+    window.closeUniModal = function() {
+        const detailModal = document.getElementById('universalDetailsModal');
+        const overlay = document.getElementById('modalOverlay');
+        
+        if (detailModal) detailModal.style.display = 'none';
+        if (overlay) overlay.style.display = 'none';
     };
 
-    // 2. CANCELLATION LOGIC (Reflects to Database)
+    // Open Cancel Modal
     window.handleCancel = function(id, deleteUrl) {
         pendingDeleteUrl = deleteUrl;
-        document.getElementById('universalCancelModal').style.display = 'flex';
+        const cancelModal = document.getElementById('universalCancelModal');
+        const overlay = document.getElementById('modalOverlay'); // Reusing overlay or use cancelModalOverlay if specific
+        
+        if (cancelModal) cancelModal.style.display = 'block';
+        if (overlay) overlay.style.display = 'block';
     };
 
+    // Close Cancel Modal (The "Keep Reservation" fix)
+    window.closeCancelModal = function() {
+        const cancelModal = document.getElementById('universalCancelModal');
+        const overlay = document.getElementById('modalOverlay');
+        const reasonInput = document.getElementById('uniCancelReason');
+        
+        if (cancelModal) cancelModal.style.display = 'none';
+        if (overlay) overlay.style.display = 'none';
+        if (reasonInput) reasonInput.value = ''; // Reset the text
+    };
+
+    // Submit Cancellation
     window.submitUniCancel = function() {
-        const reason = document.getElementById('uniCancelReason').value;
+        const reasonInput = document.getElementById('uniCancelReason');
+        const reason = reasonInput ? reasonInput.value : "";
+        
         if (reason.length < 10) {
             alert('Please provide a reason at least 10 characters long.');
             return;
         }
 
         const form = document.getElementById('uniHiddenDeleteForm');
-        form.action = pendingDeleteUrl;
-        document.getElementById('uniHiddenReasonInput').value = reason;
-        form.submit(); // This refreshes page and reflects in DB
+        if (form) {
+            form.action = pendingDeleteUrl;
+            const hiddenReason = document.getElementById('uniHiddenReasonInput');
+            if (hiddenReason) hiddenReason.value = reason;
+            form.submit(); 
+        }
     };
 
-    // 3. VIEW DETAILS LOGIC (Matches UI image_c9e26b.png)
+    // Handle View Details
     window.handleView = function(data) {
-        document.getElementById('det-status').textContent = data.status;
-        document.getElementById('det-status').className = 'badge ' + data.status.toLowerCase();
-        document.getElementById('det-facility').textContent = data.facility;
-        document.getElementById('det-date').textContent = data.date;
-        document.getElementById('det-time').textContent = data.time;
-        document.getElementById('det-user').textContent = data.user;
-        document.getElementById('det-purpose').textContent = data.purpose;
+        // Parse if it arrives as a string
+        if (typeof data === 'string') {
+            try {
+                data = JSON.parse(data);
+            } catch (e) {
+                console.error("Failed to parse reservation data", e);
+                return;
+            }
+        }
         
-        document.getElementById('universalDetailsModal').style.display = 'flex';
-    };
+        // Fill the modal fields
+        const statusEl = document.getElementById('det-status');
+        if (statusEl) {
+            statusEl.textContent = data.status.toUpperCase();
+            // This applies the .badge .rejected or .badge .approved CSS
+            statusEl.className = 'badge ' + data.status.toLowerCase();
+        }
 
-    // Keep your existing Section 1 (Leader's Facilities Logic) below this...
+        if (document.getElementById('det-facility')) document.getElementById('det-facility').textContent = data.facility;
+        if (document.getElementById('det-date')) document.getElementById('det-date').textContent = data.date;
+        if (document.getElementById('det-time')) document.getElementById('det-time').textContent = data.time;
+        if (document.getElementById('det-user')) document.getElementById('det-user').textContent = data.user;
+        if (document.getElementById('det-purpose')) document.getElementById('det-purpose').textContent = data.purpose;
+        
+        // Show modal and overlay
+        const detailModal = document.getElementById('universalDetailsModal');
+        const overlay = document.getElementById('modalOverlay');
+        
+        if (detailModal) detailModal.style.display = 'block';
+        if (overlay) overlay.style.display = 'block';
+    };
 });

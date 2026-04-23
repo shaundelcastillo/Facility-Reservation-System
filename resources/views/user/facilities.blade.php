@@ -1,7 +1,7 @@
 <h2 class="page-title">Showing 8 Facilities</h2>
-@if(session('success'))
-    <div style="background: #28a745; color: white; padding: 15px; border-radius: 10px; margin-bottom: 20px; text-align: center; font-weight: bold; box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);">
-        {{ session('success') }}
+@if(session('error'))
+    <div style="background: #e74c3c; color: white; padding: 15px; border-radius: 10px; margin-bottom: 20px; text-align: center; font-weight: bold;">
+        {{ session('error') }}
     </div>
 @endif
 
