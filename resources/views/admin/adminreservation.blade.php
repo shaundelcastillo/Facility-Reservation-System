@@ -21,7 +21,6 @@
                     <th>Time</th>
                     <th>Purpose</th>
                     <th>Status</th>
-                    {{-- Goal: Separate headers for safety --}}
                     <th style="text-align: center;">Manage</th>
                     <th style="text-align: center;">Delete</th>
                 </tr>
@@ -35,13 +34,14 @@
                     <td>{{ \Carbon\Carbon::parse($res->start_time)->format('h:i A') }} - {{ \Carbon\Carbon::parse($res->end_time)->format('h:i A') }}</td>
                     <td>{{ $res->purpose }}</td>
                     <td>
-                        <span class="badge {{ $res->status }}">{{ ucfirst($res->status) }}</span>
+                        <span class="badge {{ strtolower($res->status) }}">{{ ucfirst($res->status) }}</span>
                     </td>
 
-                    {{-- COLUMN 1: Manage Status (Approve/Reject) --}}
+                    {{-- UPDATED COLUMN 1: Manage Status (Approve/Reject) --}}
                     <td style="text-align: center;">
                         <div class="action-group" style="display: flex; gap: 10px; justify-content: center; align-items: center;">
-                            @if($res->status == 'pending')
+                            {{-- We use strtolower to make sure 'Pending' or 'PENDING' both work --}}
+                            @if(strtolower($res->status) == 'pending')
                                 <form action="{{ route('admin.updateStatus', $res->reservation_id) }}" method="POST" style="display:inline;">
                                     @csrf
                                     <input type="hidden" name="status" value="approved">

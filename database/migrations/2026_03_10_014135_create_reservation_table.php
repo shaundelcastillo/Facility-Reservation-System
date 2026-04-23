@@ -18,17 +18,22 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users', 'user_id')->onDelete('cascade');
             
             // Foreign Key to Rooms/Facilities table
-            // Ensure you have a 'rooms' migration with $table->id('room_id')
             $table->foreignId('room_id')->constrained('rooms', 'room_id')->onDelete('cascade');
             
             $table->dateTime('start_time');
             $table->dateTime('end_time');
             $table->text('purpose');
-            $table->string('status')->default('pending'); // Default status for new requests
+            $table->string('status')->default('pending'); // Default status
             
-            // Foreign Key for Admin approval
-            // Ensure you have an 'admin' migration with $table->id('admin_id')
-            $table->foreignId('approve_by')->nullable()->constrained('admin', 'admin_id')->onDelete('set null');
+            /**
+             * UPDATED: Referencing the 'users' table instead of 'admin'
+             * This ensures that when an Admin (who is a record in the users table) 
+             * approves a request, the database recognizes their ID.
+             */
+            $table->foreignId('approve_by')
+                  ->nullable()
+                  ->constrained('users', 'user_id') 
+                  ->onDelete('set null');
             
             $table->timestamps();
         });

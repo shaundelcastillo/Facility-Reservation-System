@@ -10,14 +10,13 @@ class AdminController extends Controller
 {
     public function dashboard()
     {
-        // Stats for the top dashboard cards
+        
         $total = Reservation::count();
         $pending = Reservation::where('status', 'pending')->count();
         $approved = Reservation::where('status', 'approved')->count();
         $totalFacilities = Room::count();
 
-        // Fetches the Pending Requests table for the Admin Home view
-        // Using latest() ensures that a student's new booking (like Room 309) appears immediately
+        
         $pendingRequests = Reservation::with(['user', 'room'])
                             ->where('status', 'pending')
                             ->latest()
@@ -36,15 +35,21 @@ class AdminController extends Controller
     }
 
     public function updateStatus(Request $request, $id)
-    {
-        $reservation = Reservation::findOrFail($id);
-        $reservation->update([
-            'status' => $request->status, 
-            'approve_by' => auth()->id()
-        ]);
-
-        return redirect()->back()->with('success', 'Status updated successfully!');
+{
+    $reservation = Reservation::findOrFail($id);
+    
+    // Update the status
+    $reservation->status = $request->status;
+    
+    // If approving, log the current Admin's ID
+    if ($request->status == 'approved') {
+        $reservation->approve_by = Auth::id(); 
     }
+    
+    $reservation->save();
+
+    return redirect()->back()->with('success', 'Reservation updated successfully!');
+}
 
     public function facilities()
     {
