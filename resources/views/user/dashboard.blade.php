@@ -6,43 +6,68 @@
 
 @section('content')
     <section class="welcome-banner">
-        <div class="notification-dot"></div>
-        <h1>Welcome, {{ Auth::user()->name ?? 'Student' }}</h1>
+        <h2>Welcome, {{ Auth::user()->name ?? 'Student' }}</h2>
         <p>Easily book classrooms, computer labs, and other school facilities.</p>
         <a href="{{ route('facilities') }}" class="btn-browse">Browse Available Facilities</a>
     </section>
 
     <section class="stats-grid">
-        <div class="stat-card"><h3>Total Reservations</h3><span class="num">{{ $total }}</span></div>
-        <div class="stat-card"><h3>Pending</h3><span class="num">{{ $pending }}</span></div>
-        <div class="stat-card"><h3>Approved</h3><span class="num">{{ $approved }}</span></div>
+        <div class="stat-card">
+            <div class="stat-info">
+                <h3>Total Reservations</h3>
+                <div class="stat-value">{{ $total }}</div>
+            </div>
+            <div class="stat-icon">
+                <i class="fas fa-calendar-check"></i>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-info">
+                <h3>Pending Approval</h3>
+                <div class="stat-value" style="color: #ecc94b;">{{ $pending }}</div>
+            </div>
+            <div class="stat-icon" style="color: #ecc94b;">
+                <i class="fas fa-clock"></i>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-info">
+                <h3>Approved</h3>
+                <div class="stat-value" style="color: #48bb78;">{{ $approved }}</div>
+            </div>
+            <div class="stat-icon" style="color: #48bb78;">
+                <i class="fas fa-check-circle"></i>
+            </div>
+        </div>
     </section>
 
     @if($recentReservation)
     <section class="panel">
         <div class="panel-header">
-            <h3>Recent Reservations</h3>
-            <p>Your latest booking reservation.</p>
+            <h3>Recent Reservation</h3>
+            <p style="color: #718096; font-size: 0.9rem; margin-bottom: 20px;">Your latest booking details.</p>
         </div>
 
         <div class="res-item" id="res-{{ $recentReservation->reservation_id }}">
             <div class="res-left">
-                <div>
-                    <span class="res-title">{{ $recentReservation->room->room_number }}</span>
+                <div style="margin-bottom: 10px;">
+                    <span style="font-weight: 700; color: #2d3748; font-size: 1.1rem;">{{ $recentReservation->room->room_number }}</span>
                     <span class="badge {{ $recentReservation->status }}">{{ ucfirst($recentReservation->status) }}</span>
                 </div>
-                <div class="res-info-grid">
-                    <p><span><i class="far fa-calendar-alt"></i> {{ \Carbon\Carbon::parse($recentReservation->start_time)->format('F d, Y') }}</span></p>
-                    <p><span><i class="fas fa-info-circle"></i> Purpose: {{ $recentReservation->purpose }}</span></p>
-                    <p><span><i class="fas fa-user"></i> Reserved by: {{ Auth::user()->name }}</span></p>
+                <div class="res-info-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 0.9rem; color: #4a5568;">
+                    <p><i class="far fa-calendar-alt"></i> {{ \Carbon\Carbon::parse($recentReservation->start_time)->format('F d, Y') }}</p>
+                    <p><i class="fas fa-info-circle"></i> {{ $recentReservation->purpose }}</p>
                 </div>
             </div>
-            <div class="res-right">
-                <div class="res-time"><i class="far fa-clock"></i> 
-                    <span class="time">{{ \Carbon\Carbon::parse($recentReservation->start_time)->format('h:i A') }} - {{ \Carbon\Carbon::parse($recentReservation->end_time)->format('h:i A') }}</span>
+            
+            <div class="res-right" style="text-align: right;">
+                <div style="margin-bottom: 15px; color: #4a5568; font-weight: 600;">
+                    <i class="far fa-clock"></i> 
+                    {{ \Carbon\Carbon::parse($recentReservation->start_time)->format('h:i A') }} - {{ \Carbon\Carbon::parse($recentReservation->end_time)->format('h:i A') }}
                 </div>
                 <div class="res-actions">
-                    {{-- Updated to pass full data object --}}
                     <button type="button" class="btn-detail" 
                         onclick="handleView({
                             status: '{{ $recentReservation->status }}',

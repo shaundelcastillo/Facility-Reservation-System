@@ -48,7 +48,7 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     // Update reservation status (Approve/Reject)
     Route::post('/reservations/{id}/status', [AdminController::class, 'updateStatus'])->name('admin.updateStatus');
     
-    // Delete Reservation (The new route we added)
+    // Delete Reservation 
     Route::delete('/reservations/{id}', [AdminController::class, 'destroyReservation'])->name('admin.reservations.destroy');
 
     // Admin Facilities Management

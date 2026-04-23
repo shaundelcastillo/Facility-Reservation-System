@@ -6,15 +6,13 @@ const confirmCancelBtn = document.getElementById('confirmCancelBtn');
 
 let currentActiveId = null;
 
-// Dynamically fill View Modal with card data
-// Dynamically fill View Modal with card data
+
 function handleView(id) {
     const card = document.getElementById(`res-${id}`);
     if (!card) return;
 
     // Use data-attributes or specific classes to find data
     const facilityName = card.querySelector('h2').innerText;
-    // We target the specific paragraph for date (first one in .details)
     const dateText = card.querySelector('.details p i.fa-calendar').parentElement.innerText;
     const timeText = card.querySelector('.time').innerText;
 
@@ -32,7 +30,7 @@ function handleView(id) {
     document.getElementById('viewModal').style.display = 'block';
 }
 
-// Ensure the confirmation button works with your Fetch logic
+// Ensure the confirmation button works with the Fetch logic
 confirmCancelBtn.addEventListener('click', () => {
     if (currentActiveId) {
         const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -42,7 +40,7 @@ confirmCancelBtn.addEventListener('click', () => {
             headers: {
                 'X-CSRF-TOKEN': token,
                 'Content-Type': 'application/json',
-                'Accept': 'application/json' // Crucial: Tells Laravel to return JSON
+                'Accept': 'application/json' 
             }
         })
         .then(response => {
@@ -54,14 +52,13 @@ confirmCancelBtn.addEventListener('click', () => {
                 const card = document.getElementById(`res-${currentActiveId}`);
                 closeModals();
                 
-                // Slick removal animation
+               
                 card.style.opacity = '0';
                 card.style.transform = 'translateX(20px)';
                 card.style.transition = 'all 0.4s ease';
                 
                 setTimeout(() => {
                     card.remove();
-                    // Optional: If no cards left, refresh to show the "Empty" state
                     if (document.querySelectorAll('.reservations-list .card').length === 0) {
                         location.reload();
                     }
@@ -81,7 +78,7 @@ function handleCancel(id) {
     overlay.style.display = 'block';
     cancelModal.style.display = 'block';
     
-    // Reset inputs
+    
     reasonInput.value = '';
     confirmCancelBtn.disabled = true;
 }
@@ -92,19 +89,19 @@ function closeModals() {
     cancelModal.style.display = 'none';
 }
 
-// Validation: Enable button only if reason is 10+ characters
+
 reasonInput.addEventListener('input', () => {
     confirmCancelBtn.disabled = reasonInput.value.trim().length < 10;
 });
 
-// AJAX Delete Logic
+
 confirmCancelBtn.addEventListener('click', () => {
     if (currentActiveId) {
-        // Get CSRF token from the meta tag in your layout
+        // Get CSRF token from the meta tag in layout
         const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
         // Send DELETE request to Laravel Controller 
-        // Using reservation_id logic from your migration
+        // Using reservation_id logic from migration
         fetch(`/reservation/${currentActiveId}`, {
             method: 'DELETE',
             headers: {
