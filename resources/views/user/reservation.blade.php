@@ -16,7 +16,8 @@
             <div class="card" id="res-{{ $res->reservation_id }}">
                 <div class="card-content">
                     <div class="card-header">
-                        <h2>{{ $res->room->room_number ?? 'Unknown Facility' }}</h2>
+                        {{-- Changed room_number to name --}}
+                        <h2>{{ $res->room->name ?? 'Unknown Facility' }}</h2>
                         <span class="badge {{ strtolower($res->status) }}">{{ ucfirst($res->status) }}</span>
                     </div>
                     <div class="details">
@@ -32,11 +33,11 @@
                         {{ \Carbon\Carbon::parse($res->end_time)->format('g:i A') }}
                     </div>
                     <div class="actions">
-                        {{-- Updated to pass full data object --}}
                         <button class="btn-view" 
                             onclick="handleView({
                                 status: '{{ $res->status }}',
-                                facility: '{{ $res->room->room_number }}',
+                                {{-- Changed room_number to name --}}
+                                facility: '{{ $res->room->name ?? 'Unknown' }}',
                                 date: '{{ \Carbon\Carbon::parse($res->start_time)->format('l, F j, Y') }}',
                                 time: '{{ \Carbon\Carbon::parse($res->start_time)->format('g:i A') }} - {{ \Carbon\Carbon::parse($res->end_time)->format('g:i A') }}',
                                 user: '{{ Auth::user()->name }}',

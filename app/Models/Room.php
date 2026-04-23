@@ -4,8 +4,20 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Room extends Model // This MUST be 'Room'
+class Room extends Model
 {
-    protected $primaryKey = 'room_id';
-    protected $fillable = ['room_number', 'capacity', 'building_id', 'roomtype_id', 'is_available'];
+    // Point to the correct table name found in your Tinker output
+    protected $table = 'facilities'; 
+
+    // Match the primary key found in your Tinker output
+    protected $primaryKey = 'id';
+
+    // Allow these specific columns to be saved/updated
+    protected $fillable = [
+        'name', 
+        'description', 
+        'capacity', 
+        'amenities', 
+        'status'
+    ];
 }

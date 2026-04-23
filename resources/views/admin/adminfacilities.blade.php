@@ -8,6 +8,15 @@
 
 @section('content')
 <div class="data-container">
+
+    {{-- 1. SUCCESS MESSAGE BLOCK --}}
+    @if(session('success'))
+        <div style="background: #d4edda; color: #155724; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #c3e6cb; display: flex; align-items: center; gap: 10px;">
+            <i class='bx bx-check-circle' style="font-size: 1.2rem;"></i>
+            {{ session('success') }}
+        </div>
+    @endif
+
     {{-- ADD FACILITY MODAL --}}
     <div id="facilityModal" class="modal">
         <div class="modal-content">
@@ -104,7 +113,8 @@
     @foreach($facilities as $facility)
         <div class="facility-card">
             <span class="capacity-badge">{{ $facility->capacity }} seats</span>
-            <h3>{{ $facility->room_number }}</h3>
+            {{-- 2. UPDATED TO MATCH DB 'name' --}}
+            <h3>{{ $facility->name }}</h3> 
             <p>{{ $facility->description ?? 'Standard facility available.' }}</p>
             
             <div class="tag-container">
@@ -117,7 +127,6 @@
                 @endif
             </div>
 
-            {{-- Tightened Card Footer --}}
             <div class="card-footer-layout">
                 <div class="manage-section">
                     <button class="btn-action edit" onclick="openEditModal({{ json_encode($facility) }})" style="background: rgba(255,255,255,0.2); color: white; border: 1px solid rgba(255,255,255,0.4); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 13px;">
@@ -126,10 +135,11 @@
                 </div>
                 
                 <div class="remove-section">
-                    <button type="button" class="btn-action delete" onclick="confirmDelete({{ $facility->room_id }})" style="background: none; border: none; color: #ff5e5e; cursor: pointer; font-size: 1.1rem;">
+                    {{-- 3. UPDATED TO MATCH DB 'id' --}}
+                    <button type="button" class="btn-action delete" onclick="confirmDelete({{ $facility->id }})" style="background: none; border: none; color: #ff5e5e; cursor: pointer; font-size: 1.1rem;">
                         <i class="fa-solid fa-trash"></i>
                     </button>
-                    <form id="delete-form-{{ $facility->room_id }}" action="{{ url('/admin/facilities/' . $facility->room_id) }}" method="POST" style="display:none;">
+                    <form id="delete-form-{{ $facility->id }}" action="{{ url('/admin/facilities/' . $facility->id) }}" method="POST" style="display:none;">
                         @csrf
                         @method('DELETE')
                     </form>

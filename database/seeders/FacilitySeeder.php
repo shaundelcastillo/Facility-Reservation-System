@@ -3,8 +3,8 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Facility; // Required to fix "Class not found"
-use Illuminate\Support\Facades\Schema; // Required for the Schema constraints
+use App\Models\Facility; 
+use Illuminate\Support\Facades\Schema; 
 
 class FacilitySeeder extends Seeder
 {
@@ -13,12 +13,12 @@ class FacilitySeeder extends Seeder
      */
     public function run(): void
     {
-        // 1. Temporarily disable foreign key checks to clear the table safely
+        
         Schema::disableForeignKeyConstraints();
         Facility::truncate();
         Schema::enableForeignKeyConstraints();
 
-        // 2. Insert your facility data
+        
         Facility::insert([
             [
                 'name' => 'Room 301',

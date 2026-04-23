@@ -11,7 +11,7 @@ use Carbon\Carbon;
 class ReservationController extends Controller
 {
     /**
-     * Show the dynamic reservation calendar.
+
      * Reflects ALL bookings so users know which dates are taken.
      */
     public function showCalendar(Request $request)
@@ -23,7 +23,7 @@ class ReservationController extends Controller
         $endOfMonth = $date->copy()->endOfMonth();
         
         // FIX: Fetch both 'approved' and 'pending' reservations 
-        // so users see that a slot is already "taken" or "requested"
+        // so users see a slot is already "taken" or "requested"
         $reservations = Reservation::whereIn('status', ['approved', 'pending'])
             ->whereBetween('start_time', [$startOfMonth, $endOfMonth])
             ->get()
@@ -52,20 +52,25 @@ class ReservationController extends Controller
             'purpose'    => 'required|string|max:255',
         ]);
 
-        $room = Room::where('room_number', $request->facility_name)->first();
+        // Change 'room_number' to 'name' to match your database
+        $room = Room::where('name', trim($request->facility_name))->first();
 
-        if (!$room) {
-            return redirect()->back()->with('error', 'Facility not found in database.');
-        }
+// 2. Strict Check: If the room is not found, stop here and show an error
+if (!$room) {
+    return redirect()->back()
+        ->with('error', 'Facility "' . $request->facility_name . '" was not found in our records.')
+        ->withInput(); // This keeps the student's data in the form so they don't have to re-type it
+}
 
-        Reservation::create([
-            'user_id'    => Auth::id(), 
-            'room_id'    => $room->room_id,
-            'start_time' => $request->date . ' ' . $request->start_time,
-            'end_time'   => $request->date . ' ' . $request->end_time,
-            'purpose'    => $request->purpose,
-            'status'     => 'pending', 
-        ]);
+// 3. Now it is safe to create the reservation because we know $room->id exists
+Reservation::create([
+    'user_id'    => Auth::id(),
+    'room_id'    => $room->id, // Changed from room_id to id based on standard Room models
+    'start_time' => $request->date . ' ' . $request->start_time,
+    'end_time'   => $request->date . ' ' . $request->end_time,
+    'purpose'    => $request->purpose,
+    'status'     => 'pending',
+]);
 
         return redirect()->route('dashboard')->with('success', 'Reservation submitted successfully!');
     }
@@ -91,9 +96,7 @@ class ReservationController extends Controller
         return redirect()->back()->with('success', 'Reservation cancelled.');
     }
 
-    /**
-     * Display a listing of personal reservations.
-     */
+    
     public function myReservations()
     {
         $reservations = Reservation::where('user_id', Auth::id())

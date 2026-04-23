@@ -5,19 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\Reservation;
 use App\Models\Room; 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth; // Added this line
 
 class AdminController extends Controller
 {
     public function dashboard()
     {
-        // Stats for the top dashboard cards
         $total = Reservation::count();
         $pending = Reservation::where('status', 'pending')->count();
         $approved = Reservation::where('status', 'approved')->count();
         $totalFacilities = Room::count();
 
-        // Fetches the Pending Requests table for the Admin Home view
-        // Using latest() ensures that a student's new booking (like Room 309) appears immediately
         $pendingRequests = Reservation::with(['user', 'room'])
                             ->where('status', 'pending')
                             ->latest()
@@ -38,12 +36,16 @@ class AdminController extends Controller
     public function updateStatus(Request $request, $id)
     {
         $reservation = Reservation::findOrFail($id);
-        $reservation->update([
-            'status' => $request->status, 
-            'approve_by' => auth()->id()
-        ]);
+        
+        $reservation->status = $request->status;
+        
+        if ($request->status == 'approved') {
+            $reservation->approve_by = Auth::id(); 
+        }
+        
+        $reservation->save();
 
-        return redirect()->back()->with('success', 'Status updated successfully!');
+        return redirect()->back()->with('success', 'Reservation updated successfully!');
     }
 
     public function facilities()
@@ -55,11 +57,11 @@ class AdminController extends Controller
     public function storeFacility(Request $request)
     {
         Room::create([
-            'room_number' => $request->room_number,
-            'capacity' => $request->capacity,
+            'name'        => $request->room_number, 
+            'capacity'    => $request->capacity,
             'description' => $request->description,
-            'amenities' => $request->amenities,
-            'is_available' => 'Yes'
+            'amenities'   => $request->amenities,
+            'status'      => 'available' 
         ]);
 
         return redirect()->back()->with('success', 'Facility added successfully!');
@@ -70,11 +72,11 @@ class AdminController extends Controller
         $facility = Room::findOrFail($id); 
         
         $facility->update([
-            'room_number' => $request->room_number,
-            'capacity' => $request->capacity,
+            'name'        => $request->room_number, 
+            'capacity'    => $request->capacity,
             'description' => $request->description,
             'amenities'   => $request->amenities,
-            'is_available' => $request->is_available ?? 'Yes',
+            'status'      => $request->is_available ?? 'available', 
         ]);
 
         return redirect()->back()->with('success', 'Facility updated!');
