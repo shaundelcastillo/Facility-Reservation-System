@@ -53,7 +53,8 @@
         <div class="res-item" id="res-{{ $recentReservation->reservation_id }}">
             <div class="res-left">
                 <div style="margin-bottom: 10px;">
-                    <span style="font-weight: 700; color: #2d3748; font-size: 1.1rem;">{{ $recentReservation->room->room_number }}</span>
+                    {{-- Changed room_number to name --}}
+                    <span style="font-weight: 700; color: #2d3748; font-size: 1.1rem;">{{ $recentReservation->room->name ?? 'Unknown Facility' }}</span>
                     <span class="badge {{ $recentReservation->status }}">{{ ucfirst($recentReservation->status) }}</span>
                 </div>
                 <div class="res-info-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 0.9rem; color: #4a5568;">
@@ -71,7 +72,8 @@
                     <button type="button" class="btn-detail" 
                         onclick="handleView({
                             status: '{{ $recentReservation->status }}',
-                            facility: '{{ $recentReservation->room->room_number }}',
+                            {{-- Changed room_number to name --}}
+                            facility: '{{ $recentReservation->room->name ?? 'Unknown' }}',
                             date: '{{ \Carbon\Carbon::parse($recentReservation->start_time)->format('l, F j, Y') }}',
                             time: '{{ \Carbon\Carbon::parse($recentReservation->start_time)->format('g:i A') }} - {{ \Carbon\Carbon::parse($recentReservation->end_time)->format('g:i A') }}',
                             user: '{{ Auth::user()->name }}',

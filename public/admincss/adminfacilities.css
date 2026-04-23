@@ -214,8 +214,9 @@ body { background-color: var(--bg-light); color: #333; }
 }
 
 .facility-card h3 {
-    font-size: 1.1rem;
-    margin-bottom: 8px;
+    margin-top: 15px; /* Adds space above the room name */
+    margin-bottom: 10px;
+    font-weight: 700;
 }
 
 .facility-card p {

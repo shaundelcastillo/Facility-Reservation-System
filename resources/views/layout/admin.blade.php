@@ -76,7 +76,6 @@
             if (modal) {
                 modal.style.display = 'flex';
             } else {
-                // If the modal is missing or script fails, use the browser default
                 if(confirm('Are you sure you want to log out?')) {
                     document.getElementById('logout-form').submit();
                 }

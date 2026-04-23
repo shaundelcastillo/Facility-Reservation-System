@@ -29,7 +29,8 @@
                 @foreach($reservations as $res)
                 <tr>
                     <td>{{ $res->user->name ?? 'Unknown' }}</td>
-                    <td>{{ $res->room->room_number ?? 'N/A' }}</td>
+                    {{-- FIX: Changed room_number to name to match your database --}}
+                    <td>{{ $res->room->name ?? 'N/A' }}</td>
                     <td>{{ \Carbon\Carbon::parse($res->start_time)->format('Y-m-d') }}</td>
                     <td>{{ \Carbon\Carbon::parse($res->start_time)->format('h:i A') }} - {{ \Carbon\Carbon::parse($res->end_time)->format('h:i A') }}</td>
                     <td>{{ $res->purpose }}</td>
@@ -37,10 +38,8 @@
                         <span class="badge {{ strtolower($res->status) }}">{{ ucfirst($res->status) }}</span>
                     </td>
 
-                    {{-- UPDATED COLUMN 1: Manage Status (Approve/Reject) --}}
                     <td style="text-align: center;">
                         <div class="action-group" style="display: flex; gap: 10px; justify-content: center; align-items: center;">
-                            {{-- We use strtolower to make sure 'Pending' or 'PENDING' both work --}}
                             @if(strtolower($res->status) == 'pending')
                                 <form action="{{ route('admin.updateStatus', $res->reservation_id) }}" method="POST" style="display:inline;">
                                     @csrf
@@ -63,7 +62,6 @@
                         </div>
                     </td>
 
-                    {{-- COLUMN 2: Database Management (Permanent Delete) --}}
                     <td style="text-align: center;">
                         <form action="{{ route('admin.reservations.destroy', $res->reservation_id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this reservation? This cannot be undone.')" style="display:inline;">
                             @csrf

@@ -8,6 +8,7 @@ use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\FacilitiesController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\ForgotPasswordController; // Added this import
 
 // 1. Landing & Authentication
 Route::get('/', function () { return view('welcome'); })->name('welcome');
@@ -15,6 +16,10 @@ Route::get('/login', function () { return view('welcome'); })->name('login');
 
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/register', [RegisterController::class, 'register'])->name('register');
+
+// Password Reset Routes
+Route::get('/forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
 
 Route::post('/logout', function () {
     Auth::logout();
